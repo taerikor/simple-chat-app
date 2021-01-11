@@ -3,22 +3,20 @@ import AppRouter from 'components/Router';
 import {authService} from '../fbase'
 
 function App() {
-  const [init, setInit] =useState(false)
-  const [isLogin,setIsLogin] = useState(false)
+  const [init, setInit] =useState(false);
+  const [userObj,setUserObj] = useState(null);
   useEffect(()=>{
     authService.onAuthStateChanged((user) => {
       if(user) {
-        setIsLogin(true);
-      }else {
-        setIsLogin(false);
+        setUserObj(user);
       }
       setInit(true);
     });
   },[])
   return (
     <>
-    {init ? <AppRouter isLogin={isLogin}></AppRouter> : 'Initalizing...'}
-    <footer>&copy; {new Date().getFullYear()} Taewitter</footer>
+    {init ? <AppRouter userObj={userObj} isLogin={Boolean(userObj)}></AppRouter> : 'Initalizing...'}
+    {/* <footer>&copy; {new Date().getFullYear()} Taewitter</footer> */}
     </>
   );
 }
