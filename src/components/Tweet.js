@@ -1,5 +1,7 @@
 import { dbService, storageService } from 'fbase'
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Tweet = ({tweetObj,isOwner}) => {
     const [isEdit,setIsEdit] = useState(false);
@@ -26,14 +28,16 @@ const Tweet = ({tweetObj,isOwner}) => {
         setNewTweet(value)
     }
     return(
-        <div>
+        <div className="nweet">
             {isEdit?(
                 <>
-                <form onSubmit = {onSubmit}>
-                    <input type='text' onChange={onChange} value={newTweet} placeholder ='Edit'/>
-                    <input type='submit' value='Update' />
+                <form onSubmit = {onSubmit} className="container nweetEdit">
+                    <input type='text' onChange={onChange} value={newTweet} placeholder ='Edit' required autoFocus className="formInput"/>
+                    <input type='submit' value='Update' className="formBtn" />
                 </form>
-                    <button onClick={toggleEdit} >Cancel</button>
+                <span onClick={toggleEdit} className="formBtn cancelBtn">
+                    Cancel
+                </span>
                 </>
             ):(
                 <>
@@ -41,13 +45,17 @@ const Tweet = ({tweetObj,isOwner}) => {
                     {tweetObj.text}
                 </h4>
                 {tweetObj.attachmentUrl && (
-                    <img src={tweetObj.attachmentUrl} width="50px" height="50px" alt='upload file' />
+                    <img src={tweetObj.attachmentUrl} alt='upload file' />
                 )}
                 {isOwner && (
-                    <>
-                    <button onClick={onDeleteClick}>Delete</button>
-                    <button onClick={toggleEdit}>Edit</button>
-                    </>
+                    <div class="nweet__actions">
+                        <span onClick={onDeleteClick}>
+                        <FontAwesomeIcon icon={faTrash} />
+                        </span>
+                        <span onClick={toggleEdit}>
+                        <FontAwesomeIcon icon={faPencilAlt} />
+                        </span>
+                    </div>
                 )}
                 </>
             )}
