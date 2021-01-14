@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { authService } from '../fbase';
 import AppRouter from './Router'
+import Img from '../img/userPhoto.png'
 
 
 function App() {
@@ -10,8 +11,12 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user) {
+        console.log(user.displayName)
+        const displayName = user.displayName ? user.displayName : 'USER'
+        const photoURL = user.photoURL ? user.photoURL : Img
         setUserObj({
-          displayName:user.displayName,
+          displayName,
+          photoURL,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
         })
@@ -24,8 +29,11 @@ function App() {
   },[])
   const refreshUser = () => {
     const user = authService.currentUser;
+    const displayName = user.displayName ? user.displayName : 'USER'
+    const photoURL = user.photoURL ? user.photoURL : Img
     setUserObj({
-      displayName:user.displayName,
+      displayName,
+      photoURL,
       uid: user.uid,
       updateProfile: (args) => user.updateProfile(args),
     })

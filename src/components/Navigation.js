@@ -8,9 +8,12 @@ const Navigation = ({userObj}) => {
           <li>
             <Link to='/'>Home</Link>
           </li>
-          <li>
-            <Link to='/profile'>{userObj.displayName}'s Profile</Link>
-          </li>
+          <div>
+            <Link to='/profile'>
+              <img src={userObj.photoURL} width='80px' height='80px' /> 
+              {userObj.displayName}'s Profile
+              </Link>
+          </div>
         </ul>
       </nav>
     )

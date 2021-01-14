@@ -9,13 +9,14 @@ const Home = ({userObj}) => {
     const [attachment,setAttachment] = useState('')
 
     useEffect(()=>{
-        dbService.collection('tweets').onSnapshot((snapshot)=>{
+        dbService.collection('tweets').orderBy("createAt",'desc').onSnapshot((snapshot)=>{
            const tweetArray = snapshot.docs.map(doc => ({
                 id:doc.id,
                 ...doc.data()
             }))
             setTweets(tweetArray)
         })
+        return () => null;
     },[])
     const onChange = (e) => {
         const {target : {value}} = e;
@@ -37,6 +38,8 @@ const Home = ({userObj}) => {
             createAt:Date.now(),
             createId:userObj.uid,
             attachmentUrl,
+            userName:userObj.displayName,
+            userPhoto:userObj.photoURL,
         }
         await dbService.collection('tweets').add(tweetObj);
         setTweet('')

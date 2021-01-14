@@ -8,7 +8,7 @@ const Tweet = ({tweetObj, isOwner}) => {
         const getConfirm = window.confirm('Delete Tweet?');
         if(getConfirm){
             dbService.doc(`tweets/${tweetObj.id}`).delete();
-            storageServive.refFromURL(tweetObj.attachmentUrl).delete()
+           tweetObj.attachmentUrl && storageServive.refFromURL(tweetObj.attachmentUrl).delete()
         }
     }
     const onChange = e => {
@@ -41,7 +41,11 @@ const Tweet = ({tweetObj, isOwner}) => {
             alt='upload file' 
             height='150px' 
             width='150px'/>}
-           
+            <div>
+                <img src={tweetObj.userPhoto} height='50px' width='50px' />
+           <h5>{tweetObj.userName}</h5>
+
+            </div>
             {isOwner&& (
                 <>
                 <button onClick={onDeleteClick}>Delete</button>
