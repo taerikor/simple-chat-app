@@ -5,16 +5,33 @@ import React, { useEffect, useState } from 'react'
 
 
 const Home = ({userObj}) => {
-
     const[tweets,setTweets]=useState([]);
+    const [getTweets,setGetTweets] = useState(10)
+
+    const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+        if ((scrollTop + clientHeight >= scrollHeight)&& getTweets < 15) {
+            setGetTweets(getTweets + 10)
+        }
+    }
+
+  
     useEffect(()=>{
-        dbService.collection('tweets').onSnapshot((snapshot) => {
+        dbService.collection('tweets').limit(getTweets).onSnapshot((snapshot) => {
             const tweetArray = snapshot.docs.map((doc) => ({
                 id:doc.id,
                 ...doc.data()
             }))
             setTweets(tweetArray);
         })
+    },[getTweets])
+  
+      useEffect(()=> {
+         window.addEventListener('scroll',handleScroll)
+
+         return () =>  window.removeEventListener('scroll',handleScroll)
     },[])
 
     return (

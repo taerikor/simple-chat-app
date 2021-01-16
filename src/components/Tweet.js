@@ -1,3 +1,4 @@
+
 import { dbService, storageService } from 'fbase'
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,10 +8,10 @@ const Tweet = ({tweetObj,isOwner}) => {
     const [isEdit,setIsEdit] = useState(false);
     const [newTweet,setNewTweet] = useState('')
     const onDeleteClick = ()=> {
-        const getConfirm = window.confirm('really?')
+        const getConfirm = window.confirm('Delete Tweet?')
         if(getConfirm){
             dbService.doc(`tweets/${tweetObj.id}`).delete()
-            storageService.refFromURL(tweetObj.attachmentUrl).delete();
+            tweetObj.attachmentUrl && storageServive.refFromURL(tweetObj.attachmentUrl).delete()
         }
     }
     const toggleEdit = () => {
@@ -47,6 +48,10 @@ const Tweet = ({tweetObj,isOwner}) => {
                 {tweetObj.attachmentUrl && (
                     <img src={tweetObj.attachmentUrl} alt='upload file' />
                 )}
+                <div>
+                <img src={tweetObj.userPhoto} height='50px' width='50px'alt='tweet'/>
+                <h5>{tweetObj.userName}</h5>
+            </div>
                 {isOwner && (
                     <div class="nweet__actions">
                         <span onClick={onDeleteClick}>

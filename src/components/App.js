@@ -1,37 +1,49 @@
 import React, { useEffect, useState } from 'react'
-import AppRouter from 'components/Router';
-import {authService} from '../fbase'
+import { authService } from '../fbase';
+import AppRouter from './Router'
+import Img from '../img/userPhoto.png'
+
 
 function App() {
-  const [init, setInit] =useState(false);
+  const [init,setInit] = useState(false);
   const [userObj,setUserObj] = useState(null);
-  useEffect(()=>{
+
+
+  useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user) {
+        const displayName = user.displayName ? user.displayName : 'USER'
+        const photoURL = user.photoURL ? user.photoURL : Img
         setUserObj({
-          displayName: user.displayName,
+          displayName,
+          photoURL,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
-        });
-      }  else {
-        setUserObj(null);
+        })
+      }else {
+        setUserObj(null)
       }
-      setInit(true);
-    });
+      setInit(true)
+    })
+
   },[])
   const refreshUser = () => {
     const user = authService.currentUser;
+    const displayName = user.displayName ? user.displayName : 'USER'
+    const photoURL = user.photoURL ? user.photoURL : Img
     setUserObj({
-      displayName: user.displayName,
+      displayName,
+      photoURL,
       uid: user.uid,
       updateProfile: (args) => user.updateProfile(args),
     })
   }
+
   return (
-    <>
-    {init ? <AppRouter refreshUser={refreshUser} userObj={userObj} isLogin={Boolean(userObj)}></AppRouter> : 'Initalizing...'}
-    {/* <footer>&copy; {new Date().getFullYear()} Taewitter</footer> */}
-    </>
+   <>
+    {init ? <AppRouter refreshUser={refreshUser} userObj={userObj} isLogin={Boolean(userObj)} /> : 'Initialize...' }
+   </>
+
   );
 }
 
