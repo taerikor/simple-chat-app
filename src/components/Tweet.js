@@ -42,9 +42,8 @@ const Tweet = ({tweetObj, isOwner}) => {
             height='150px' 
             width='150px'/>}
             <div>
-                <img src={tweetObj.userPhoto} height='50px' width='50px' />
-           <h5>{tweetObj.userName}</h5>
-
+                <img src={tweetObj.userPhoto} height='50px' width='50px'alt='tweet'/>
+                <h5>{tweetObj.userName}</h5>
             </div>
             {isOwner&& (
                 <>

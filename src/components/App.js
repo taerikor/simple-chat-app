@@ -8,10 +8,10 @@ function App() {
   const [init,setInit] = useState(false);
   const [userObj,setUserObj] = useState(null);
 
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user) {
-        console.log(user.displayName)
         const displayName = user.displayName ? user.displayName : 'USER'
         const photoURL = user.photoURL ? user.photoURL : Img
         setUserObj({
