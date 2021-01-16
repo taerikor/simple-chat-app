@@ -37,15 +37,27 @@ const Profile = ({userObj, refreshUser}) => {
 
 
     return (
-        <div>
-            <ProfileForm userObj={userObj} refreshUser={refreshUser}/>
-        <span onClick={onClick}>Log Out</span>
-        <div>
+          <div className="container">
+                  <ProfileForm userObj={userObj} refreshUser={refreshUser}/>
+//     <form onSubmit={onSubmit}>
+//         <input onChange={onChange} value={newName} type='text' placeholder='Change Name' className="formInput" autoFocus/>
+//         <input   
+//           type="submit"
+//           value="Update Profile"
+//           className="formBtn"
+//           style={{
+//             marginTop: 10,
+//           }}/>
+//     </form>
+    <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Log Out
+      </span>
+         <div>
             {tweetsLog.map(tweet => (
                 <Tweet key={tweet.createAt} tweetObj={tweet} isOwner={tweet.createId === userObj.uid}/>
             ))}
         </div>
-        </div>
+    </div>
     )
 }
 

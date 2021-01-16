@@ -43,6 +43,7 @@ function App() {
    <>
     {init ? <AppRouter refreshUser={refreshUser} userObj={userObj} isLogin={Boolean(userObj)} /> : 'Initialize...' }
    </>
+
   );
 }
 
