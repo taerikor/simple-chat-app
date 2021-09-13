@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { dbService } from '../firebase';
-import {collection, addDoc, getDocs} from 'firebase/firestore'
+import {collection, addDoc, getDocs, onSnapshot} from 'firebase/firestore'
 
 interface tweetsState {
     text:string;
@@ -16,20 +16,27 @@ const Home = ({userId}:HomeProps):JSX.Element => {
     const [tweet,setTweet] = useState("");
     const [tweets,setTweets] = useState<tweetsState[]>([]);
 
-    const getTweets = async() => {
-        const dbTweets = await getDocs(collection(dbService, 'tweets'))
-        dbTweets.forEach((doc) => {
-            const tweetObj = {
-                createAt:doc.data().createAt,
-                text: doc.data().text,
-                id: doc.id,
-            }
-            setTweets((prev) => [tweetObj, ...prev])
-        })
-    }
+    // const getTweets = async() => {
+    //     const dbTweets = await getDocs(collection(dbService, 'tweets'))
+    //     dbTweets.forEach((doc) => {
+    //         const tweetObj = {
+    //             createAt:doc.data().createAt,
+    //             text: doc.data().text,
+    //             id: doc.id,
+    //         }
+    //         setTweets((prev) => [tweetObj, ...prev])
+    //     })
+    // }
 
     useEffect(() => {
-        getTweets();
+        onSnapshot(collection(dbService, 'tweets'),(snapshot)=>{
+            const newTweets = snapshot.docs.map(doc => ({
+                id: doc.id,
+                createAt:doc.data().createAt,
+                text: doc.data().text,
+            }))
+            setTweets(newTweets)
+        })
     }, [])
 
     const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
