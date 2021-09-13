@@ -7,9 +7,10 @@ import Navigation from './Navigation'
 
 interface AppRouterProps {
     isLoggedIn: boolean
+    userId: string
 }
 
-const AppRouter = ({isLoggedIn}:AppRouterProps):JSX.Element => {
+const AppRouter = ({isLoggedIn,userId}:AppRouterProps):JSX.Element => {
     return (
         <Router>
             {isLoggedIn && <Navigation />}
@@ -17,7 +18,7 @@ const AppRouter = ({isLoggedIn}:AppRouterProps):JSX.Element => {
                 {isLoggedIn ? (
                     <>
                     <Route exact path='/'>
-                        <Home />
+                        <Home userId={userId}/>
                     </Route>
                     <Route exact path='/profile'>
                         <Profile />
