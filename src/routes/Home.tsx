@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { dbService } from '../firebase';
-import {collection, addDoc, getDocs, onSnapshot} from 'firebase/firestore'
+import {collection, addDoc, onSnapshot} from 'firebase/firestore'
+import Tweet from '../components/Tweet'
 
-interface tweetsState {
+export interface tweetsState {
     text:string;
     createAt: number;
     id: string;
+    userId: string;
 }
 
 interface HomeProps {
@@ -16,24 +18,13 @@ const Home = ({userId}:HomeProps):JSX.Element => {
     const [tweet,setTweet] = useState("");
     const [tweets,setTweets] = useState<tweetsState[]>([]);
 
-    // const getTweets = async() => {
-    //     const dbTweets = await getDocs(collection(dbService, 'tweets'))
-    //     dbTweets.forEach((doc) => {
-    //         const tweetObj = {
-    //             createAt:doc.data().createAt,
-    //             text: doc.data().text,
-    //             id: doc.id,
-    //         }
-    //         setTweets((prev) => [tweetObj, ...prev])
-    //     })
-    // }
-
     useEffect(() => {
         onSnapshot(collection(dbService, 'tweets'),(snapshot)=>{
             const newTweets = snapshot.docs.map(doc => ({
                 id: doc.id,
                 createAt:doc.data().createAt,
                 text: doc.data().text,
+                userId: doc.data().userId,
             }))
             setTweets(newTweets)
         })
@@ -64,10 +55,7 @@ const Home = ({userId}:HomeProps):JSX.Element => {
             </form>
         </div>
         <div>
-            {tweets.map((tweet) => <div key={tweet.id}>
-                <h3>{tweet.text}</h3>
-                </div>
-                )}
+            {tweets.map((tweet) => <Tweet key={tweet.id} tweetObj={tweet} isOwner={userId === tweet.userId} />)}
         </div>
         </>
     )
