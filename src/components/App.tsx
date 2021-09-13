@@ -24,7 +24,6 @@ function App():JSX.Element {
     <>
     {
       init ? <AppRouter isLoggedIn={isLoggedIn}/>: 'loading...'
-
     }
     </>
   );
