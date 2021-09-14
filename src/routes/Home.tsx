@@ -17,6 +17,8 @@ interface HomeProps {
 const Home = ({userId}:HomeProps):JSX.Element => {
     const [tweet,setTweet] = useState("");
     const [tweets,setTweets] = useState<tweetsState[]>([]);
+    const [imageURL, setImageURL] = useState("")
+
 
     useEffect(() => {
         onSnapshot(collection(dbService, 'tweets'),(snapshot)=>{
@@ -46,12 +48,34 @@ const Home = ({userId}:HomeProps):JSX.Element => {
         setTweet("")
         
     }
+    const onFileChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files
+          if(files === null){
+              return null;
+          }
+
+          const imgFile = files[0];
+          const reader = new FileReader();
+          reader.onloadend = (event) => {
+            const result = reader.result as string
+            setImageURL(result)
+          };
+          reader.readAsDataURL(imgFile);
+    }
+    const onClearURLClick = () => setImageURL("")
     return (
         <>
         <div>
             <form onSubmit={onSubmit}>
                 <input value={tweet} onChange={onChange} type='text' placeholder="What's happening?" />
                 <input type='submit' value="Tweet" />
+                <input type="file" accept="image/*" onChange={onFileChange} />
+                {imageURL && (
+                    <>
+                        <img src={imageURL} alt="upload" height="50px" width="50px" />
+                        <button onClick={onClearURLClick}>Clear</button>
+                    </>
+                )}
             </form>
         </div>
         <div>
