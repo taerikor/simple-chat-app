@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { tweetsState } from '../routes/Home'
-import { deleteDoc,setDoc,doc } from '@firebase/firestore'
-import { dbService } from '../firebase'
+import { deleteDoc,setDoc,doc} from '@firebase/firestore'
+import { dbService, storageService } from '../firebase'
+import { deleteObject,ref } from 'firebase/storage'
+
 
 
 interface TweetProps {
     tweetObj: tweetsState;
-    isOwner: boolean
+    isOwner: boolean;
 }
 
 const Tweet = ({tweetObj,isOwner}:TweetProps) => {
@@ -16,6 +18,8 @@ const Tweet = ({tweetObj,isOwner}:TweetProps) => {
         const confirm = window.confirm("you really delete this?")
         if(confirm){
             deleteDoc(doc(dbService,`tweets/${tweetObj.id}`))
+            deleteObject(ref(storageService,tweetObj.imageUrl))
+
         }
     }
 
@@ -49,6 +53,7 @@ const Tweet = ({tweetObj,isOwner}:TweetProps) => {
             ) : 
             (
                 <>
+                {tweetObj.imageUrl && <img src={tweetObj.imageUrl} height="80px" width="80px" alt='post' />}
                 <h3>{tweetObj.text}</h3>
                 {isOwner && (
                     <>

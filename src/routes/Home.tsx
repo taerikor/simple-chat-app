@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { dbService } from '../firebase';
-import {collection, addDoc, onSnapshot} from 'firebase/firestore'
+import { dbService, storageService } from '../firebase';
+import {collection, addDoc, onSnapshot } from 'firebase/firestore'
+import { ref,uploadString,getDownloadURL } from 'firebase/storage'
 import Tweet from '../components/Tweet'
+import { v4 as uuidv4 } from 'uuid';
 
 export interface tweetsState {
     text:string;
     createAt: number;
     id: string;
     userId: string;
+    imageUrl: string;
 }
 
 interface HomeProps {
     userId: string
 }
 
+
+
 const Home = ({userId}:HomeProps):JSX.Element => {
     const [tweet,setTweet] = useState("");
     const [tweets,setTweets] = useState<tweetsState[]>([]);
-    const [imageURL, setImageURL] = useState("")
+    const [readerUrl, setReaderUrl] = useState("")
 
 
     useEffect(() => {
@@ -27,6 +32,7 @@ const Home = ({userId}:HomeProps):JSX.Element => {
                 createAt:doc.data().createAt,
                 text: doc.data().text,
                 userId: doc.data().userId,
+                imageUrl: doc.data().imageUrl
             }))
             setTweets(newTweets)
         })
@@ -38,14 +44,27 @@ const Home = ({userId}:HomeProps):JSX.Element => {
     }
     const onSubmit = async(event: React.FormEvent) => {
         event.preventDefault();
+        const storageRef = ref(storageService, `${userId}/${uuidv4()}`)
+        let imageUrl = ""
         if(tweet !== ""){
-            await addDoc(collection(dbService, 'tweets') ,{
+            if(readerUrl !== ""){
+                await uploadString(
+                            storageRef,
+                            readerUrl,
+                            'data_url'
+                            )
+                imageUrl = await getDownloadURL(storageRef)
+            }
+            const tweetObj = {
                 text: tweet,
                 createAt:Date.now(),
-                userId
-            })
-        }
-        setTweet("")
+                userId,
+                imageUrl
+            }
+                await addDoc(collection(dbService, 'tweets') ,tweetObj)
+                }
+                setTweet("")
+                setReaderUrl("")
         
     }
     const onFileChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -58,11 +77,11 @@ const Home = ({userId}:HomeProps):JSX.Element => {
           const reader = new FileReader();
           reader.onloadend = (event) => {
             const result = reader.result as string
-            setImageURL(result)
+            setReaderUrl(result)
           };
           reader.readAsDataURL(imgFile);
     }
-    const onClearURLClick = () => setImageURL("")
+    const onClearURLClick = () => setReaderUrl("")
     return (
         <>
         <div>
@@ -70,16 +89,16 @@ const Home = ({userId}:HomeProps):JSX.Element => {
                 <input value={tweet} onChange={onChange} type='text' placeholder="What's happening?" />
                 <input type='submit' value="Tweet" />
                 <input type="file" accept="image/*" onChange={onFileChange} />
-                {imageURL && (
+                {readerUrl && (
                     <>
-                        <img src={imageURL} alt="upload" height="50px" width="50px" />
+                        <img src={readerUrl} alt="upload" height="50px" width="50px" />
                         <button onClick={onClearURLClick}>Clear</button>
                     </>
                 )}
             </form>
         </div>
         <div>
-            {tweets.map((tweet) => <Tweet key={tweet.id} tweetObj={tweet} isOwner={userId === tweet.userId} />)}
+            {tweets.map((tweet) => <Tweet key={tweet.id} tweetObj={tweet} isOwner={userId === tweet.userId}/>)}
         </div>
         </>
     )
