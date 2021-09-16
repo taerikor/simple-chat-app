@@ -1,27 +1,36 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { User } from '@firebase/auth'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import Auth from '../routes/Auth'
 import Home from '../routes/Home'
 import Profile from '../routes/Profile'
 import Navigation from './Navigation'
 
+
 interface AppRouterProps {
     isLoggedIn: boolean
-    userId: string
+    userObj: User | null
 }
 
-const AppRouter = ({isLoggedIn,userId}:AppRouterProps):JSX.Element => {
+const AppRouter = ({isLoggedIn,userObj}:AppRouterProps):JSX.Element => {
+
+    const [displayName,setDisplayName] = useState(userObj?.displayName ? userObj.displayName : "User")
+
+    const renderUserName = (newName:string):void => {
+        setDisplayName(newName)
+    }
+
     return (
         <Router>
-            {isLoggedIn && <Navigation />}
+            {isLoggedIn && <Navigation displayName={displayName}/>}
             <Switch>
-                {isLoggedIn ? (
+                {isLoggedIn && userObj ? (
                     <>
                     <Route exact path='/'>
-                        <Home userId={userId}/>
+                        <Home userId={userObj.uid}/>
                     </Route>
                     <Route exact path='/profile'>
-                        <Profile />
+                        <Profile userObj={userObj} renderUserName={renderUserName} userName={displayName}/>
                     </Route>
                     </>
                 ) : (

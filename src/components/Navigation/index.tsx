@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navigation = ():JSX.Element => {
+interface NavigationProps {
+    displayName: string
+}
+const Navigation = ({displayName}:NavigationProps):JSX.Element => {
     return (
         <nav>
             <ul>
@@ -12,7 +15,7 @@ const Navigation = ():JSX.Element => {
                 </li>
                 <li>
                     <Link to="/Profile">
-                        Profile
+                        {displayName}'s Profile
                     </Link>
                 </li>
             </ul>

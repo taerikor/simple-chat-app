@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { authService } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, User } from 'firebase/auth'
 import AppRouter from './AppRouter';
 
 
@@ -9,14 +9,13 @@ import AppRouter from './AppRouter';
 function App():JSX.Element {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [init, setInit] = useState(false)
-  const [userObj, setUserObj] = useState<any>(null);
+  const [userObj, setUserObj] = useState<User | null>(null);
 
   useEffect(() => {
     onAuthStateChanged(authService, (user) => {
       if(user){
         setIsLoggedIn(true)
         setUserObj(user)
-        console.log(user)
       }else {
         setIsLoggedIn(false)
       }
@@ -26,7 +25,7 @@ function App():JSX.Element {
   return (
     <>
     {
-      init ? <AppRouter isLoggedIn={isLoggedIn} userId={userObj.uid}/>: 'loading...'
+      init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/>: 'loading...'
     }
     </>
   );
