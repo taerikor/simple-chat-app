@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { dbService, storageService } from '../../firebase';
 import {collection, addDoc } from 'firebase/firestore'
 
+import './TweetForm.css'
+
 interface TweetFormProps {
     userId: string
 }
@@ -57,7 +59,7 @@ const TweetForm = ({userId}:TweetFormProps ) => {
     }
     const onClearURLClick = () => setReaderUrl("")
     return (
-        <form onSubmit={onSubmit}>
+        <form className="tweetForm" onSubmit={onSubmit}>
         <input value={tweet} onChange={onChange} type='text' placeholder="What's happening?" />
         <input type='submit' value="Tweet" />
         <input type="file" accept="image/*" onChange={onFileChange} />

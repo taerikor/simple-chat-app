@@ -3,6 +3,8 @@ import { authService } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth'
 import AppRouter from './AppRouter';
 
+import "./App.css"
+
 
 
 

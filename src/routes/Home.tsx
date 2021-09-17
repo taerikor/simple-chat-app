@@ -7,7 +7,7 @@ import TweetForm from '../components/TweetForm';
 export interface tweetsState {
     text:string;
     createAt: number;
-    id: string;
+    id?: string;
     userId: string;
     imageUrl: string;
 }
