@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from 'firebase/auth'
 import { authService } from '../../firebase'
 
 interface AuthFormProps {
@@ -25,6 +25,7 @@ const AuthForm = ({newAccount}:AuthFormProps) => {
             let data
             if(newAccount){
              data =  await createUserWithEmailAndPassword(authService,email,password)
+             await updateProfile(data.user,{displayName:'User',photoURL:`https://source.unsplash.com/user/${data.user.uid}/300x300`})
             }else {
              data =  await signInWithEmailAndPassword(authService,email,password)
             }

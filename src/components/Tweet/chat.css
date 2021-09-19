@@ -1,3 +1,6 @@
+.chat_container {
+  margin-bottom: 20px;
+}
 .ownerChat {
   display: flex;
   justify-content: right;
@@ -10,5 +13,7 @@
 }
 
 .otherChat {
+  display: flex;
+  justify-content: left;
   background-color: cadetblue;
 }

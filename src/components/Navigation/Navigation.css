@@ -2,9 +2,9 @@ nav {
   display: flex;
   justify-content: right;
   align-items: center;
-  padding-right: 20px;
   height: 50px;
-  position: sticky;
+  width: 100%;
+  position: fixed;
   top: 0;
   background-color: black;
 }
@@ -14,4 +14,5 @@ nav a {
   cursor: pointer;
   color: white;
   font-size: 20px;
+  padding-right: 20px;
 }

@@ -8,9 +8,11 @@ import './TweetForm.css'
 
 interface TweetFormProps {
     userId: string
+    userName: string | null;
+    userImage: string | null;
 }
 
-const TweetForm = ({userId}:TweetFormProps ) => {
+const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
     const [tweet,setTweet] = useState("");
     const [readerUrl, setReaderUrl] = useState("")
 
@@ -34,8 +36,12 @@ const TweetForm = ({userId}:TweetFormProps ) => {
             const tweetObj = {
                 text: tweet,
                 createAt:Date.now(),
-                userId,
-                imageUrl
+                imageUrl,
+                author:{
+                    userId,
+                    userName,
+                    userImage
+                }
             }
                 await addDoc(collection(dbService, 'tweets') ,tweetObj)
                 }

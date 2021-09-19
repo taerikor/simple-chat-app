@@ -5,6 +5,7 @@ import { dbService,storageService } from '../../firebase'
 import { deleteObject,ref } from 'firebase/storage'
 
 import './chat.css'
+import timeForToday from '../../utils/Date'
 
 
 interface TweetProps {
@@ -25,20 +26,34 @@ const Tweet = ({tweetObj,isOwner}:TweetProps) => {
 
 
     return (
-        <>
+        <div className='chat_container'>
         {isOwner ? (
         <div className="ownerChat">
+            <div>
                 {tweetObj.imageUrl && <img src={tweetObj.imageUrl} height="80px" width="80px" alt='post' />}
+                <div>
+                <h4>{tweetObj.author.userName}</h4>
+                </div>
                 <h3>{tweetObj.text}</h3>
-                            <button onClick={onDeleteClick}>Delete</button>
+                <div>
+                <h4>{timeForToday(tweetObj.createAt)}</h4>
+                <button onClick={onDeleteClick}>Delete</button>
+                </div>
+            </div>
         </div>
         ):(
             <div className="otherChat">
+                <div>
             {tweetObj.imageUrl && <img src={tweetObj.imageUrl} height="80px" width="80px" alt='post' />}
+            <h4>{tweetObj.author.userName}</h4>
             <h3>{tweetObj.text}</h3>
+            <div>
+            <h4>{timeForToday(tweetObj.createAt)}</h4>
+            </div>
+                </div>
     </div>
         )}
-        </>
+        </div>
     )
 }
 
