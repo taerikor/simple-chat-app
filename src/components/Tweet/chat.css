@@ -1,0 +1,14 @@
+.ownerChat {
+  display: flex;
+  justify-content: right;
+  background-color: bisque;
+}
+
+.ownerChat button {
+  height: 20px;
+  width: 60px;
+}
+
+.otherChat {
+  background-color: cadetblue;
+}

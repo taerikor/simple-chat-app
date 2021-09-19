@@ -60,7 +60,7 @@ const TweetForm = ({userId}:TweetFormProps ) => {
     const onClearURLClick = () => setReaderUrl("")
     return (
         <form className="tweetForm" onSubmit={onSubmit}>
-        <input value={tweet} onChange={onChange} type='text' placeholder="What's happening?" />
+        <input value={tweet} onChange={onChange} type='textarea' placeholder="What's happening?" />
         <input type='submit' value="Tweet" />
         <input type="file" accept="image/*" onChange={onFileChange} />
         {readerUrl && (

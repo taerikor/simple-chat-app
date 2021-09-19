@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { tweetsState } from '../../routes/Home'
-import { setDoc,doc} from '@firebase/firestore'
-import { dbService } from '../../firebase'
-import TweetAddons from '../TweetAddons'
+import { doc,deleteDoc} from '@firebase/firestore'
+import { dbService,storageService } from '../../firebase'
+import { deleteObject,ref } from 'firebase/storage'
 
+import './chat.css'
 
 
 interface TweetProps {
@@ -12,47 +13,32 @@ interface TweetProps {
 }
 
 const Tweet = ({tweetObj,isOwner}:TweetProps) => {
-    const [isEdit,setIsEdit] = useState(false)
-    const [newTweet, setNewTweet] = useState(tweetObj.text)
 
-    const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value
-        setNewTweet(value)
-    }
-    
-    const onSubmit = (event:React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if(newTweet !== tweetObj.text){
-            setDoc(doc(dbService,`tweets/${tweetObj.id}`),{
-                ...tweetObj,
-                text:newTweet
-            })
+    const onDeleteClick = () => {
+        const confirm = window.confirm("you really delete this?")
+        if(confirm){
+            deleteDoc(doc(dbService,`tweets/${tweetObj.id}`))
+            deleteObject(ref(storageService,tweetObj.imageUrl))
+
         }
-        toggleEdit()
     }
 
-    const toggleEdit = () => setIsEdit((prev) => !prev)
 
     return (
-        <div>
-            {isEdit ? (
-            <>
-            <form onSubmit={onSubmit}>
-                <input onChange={onChange} value={newTweet} type='text' required placeholder="Edit"/>
-                <input type='submit' value='Update' />
-            </form>
-            <button onClick={toggleEdit}>Cancel</button>
-            </>
-            ) : 
-            (
-                <>
+        <>
+        {isOwner ? (
+        <div className="ownerChat">
                 {tweetObj.imageUrl && <img src={tweetObj.imageUrl} height="80px" width="80px" alt='post' />}
                 <h3>{tweetObj.text}</h3>
-                {isOwner && <TweetAddons tweetObj={tweetObj} toggleEdit={toggleEdit} />}
-                </>
-            )
-            }
+                            <button onClick={onDeleteClick}>Delete</button>
         </div>
+        ):(
+            <div className="otherChat">
+            {tweetObj.imageUrl && <img src={tweetObj.imageUrl} height="80px" width="80px" alt='post' />}
+            <h3>{tweetObj.text}</h3>
+    </div>
+        )}
+        </>
     )
 }
 
