@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword,UserCredential } from 'firebase/auth'
-import { authService, dbService } from '../../firebase'
-import { addDoc, collection } from '@firebase/firestore'
+import { authService } from '../../firebase'
 
 interface AuthFormProps {
     newAccount: boolean;

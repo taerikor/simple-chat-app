@@ -4,6 +4,7 @@ import {collection, onSnapshot,query,orderBy} from 'firebase/firestore'
 import Chat from '../components/Chat'
 import ChatForm from '../components/ChatForm';
 import { User } from '@firebase/auth';
+import { userObjState } from '../components/App';
 
 export interface ChatsState {
     id: string;
@@ -18,7 +19,7 @@ export interface ChatsState {
 }
 
 interface HomeProps {
-    userObj: User
+    userObj: userObjState
 }
 
 
@@ -60,9 +61,9 @@ const Home = ({userObj}:HomeProps):JSX.Element => {
                     'marginBottom': '50px',
                             }}
         >
-            {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.uid === chat.author.userId}/>)}
+            {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.userId === chat.author.userId}/>)}
         </div>
-            <ChatForm userId={userObj.uid} userName={userObj.displayName } userImage={userObj.photoURL} />
+            <ChatForm userId={userObj.userId} userName={userObj.displayName } userImage={userObj.photoURL} />
         </div>
     )
 }

@@ -35,14 +35,15 @@ const Auth = (): JSX.Element => {
                 userObj = {
                     displayName: "User",
                     photoURL:`https://source.unsplash.com/user/${data.user.uid}/300x300`,
-                    userId: data.user.uid
+                    userId: data.user.uid,
+                    userDesc:""
                  }
             }else if (userInfo.providerId === googleUserProviderId){
                 userObj = {
                     displayName: data.user.displayName,
                     photoURL:data.user.photoURL,
-                    userId: data.user.uid
-    
+                    userId: data.user.uid,
+                    userDesc:""
                 }
             }
             if(userInfo.isNewUser){
