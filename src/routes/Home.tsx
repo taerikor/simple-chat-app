@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { dbService } from '../firebase';
 import {collection, onSnapshot,query,orderBy} from 'firebase/firestore'
-import Tweet from '../components/Tweet'
-import TweetForm from '../components/TweetForm';
+import Chat from '../components/Chat'
+import ChatForm from '../components/ChatForm';
 import { User } from '@firebase/auth';
 
-export interface tweetsState {
+export interface ChatsState {
     id: string;
     text: string;
     imageUrl: string;
@@ -25,12 +25,12 @@ interface HomeProps {
 
 const Home = ({userObj}:HomeProps):JSX.Element => {
     
-    const [tweets,setTweets] = useState<tweetsState[] | []>([]);
+    const [chats,setChats] = useState<ChatsState[] | []>([]);
 
     useEffect(() => {
-        const ascQuery = query(collection(dbService, "tweets"),orderBy("createAt",'asc'))
+        const ascQuery = query(collection(dbService, "chats"),orderBy("createAt",'asc'))
         onSnapshot(ascQuery,(snapshot)=>{
-            const newTweets = snapshot.docs.map(doc => ({
+            const newChats = snapshot.docs.map(doc => ({
                 id: doc.id,
                 createAt:doc.data().createAt,
                 text: doc.data().text,
@@ -41,30 +41,29 @@ const Home = ({userObj}:HomeProps):JSX.Element => {
                     userImage: doc.data().author.userImage
                 }
             }))
-            console.log(newTweets)
-            setTweets(newTweets)
+            setChats(newChats)
         })
     }, [])
 
     useEffect(() => {
         window.scrollTo(0,document.body.scrollHeight);
-    },[tweets])
+    },[chats])
 
     return (
-        <>
+        <div
+        style={{'height':'100vh'}}
+        >
         <div
                 style={{
                     'display':'flex',
                     'flexDirection':'column',
-                    'marginBottom': '50px'
+                    'marginBottom': '50px',
                             }}
         >
-            {tweets.map((tweet) => <Tweet key={tweet.id} tweetObj={tweet} isOwner={userObj.uid === tweet.author.userId}/>)}
+            {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.uid === chat.author.userId}/>)}
         </div>
-        <>
-            <TweetForm userId={userObj.uid} userName={userObj.displayName } userImage={userObj.photoURL} />
-        </>
-        </>
+            <ChatForm userId={userObj.uid} userName={userObj.displayName } userImage={userObj.photoURL} />
+        </div>
     )
 }
 

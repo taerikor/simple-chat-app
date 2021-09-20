@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from 'firebase/auth'
-import { authService } from '../../firebase'
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword,UserCredential } from 'firebase/auth'
+import { authService, dbService } from '../../firebase'
+import { addDoc, collection } from '@firebase/firestore'
 
 interface AuthFormProps {
     newAccount: boolean;
+    addUserDoc: (data: UserCredential) => Promise<void>
 }
 
-const AuthForm = ({newAccount}:AuthFormProps) => {
+const AuthForm = ({newAccount,addUserDoc}:AuthFormProps) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const onChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
@@ -22,18 +24,17 @@ const AuthForm = ({newAccount}:AuthFormProps) => {
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
         try{
-            let data
             if(newAccount){
-             data =  await createUserWithEmailAndPassword(authService,email,password)
-             await updateProfile(data.user,{displayName:'User',photoURL:`https://source.unsplash.com/user/${data.user.uid}/300x300`})
+             let data =  await createUserWithEmailAndPassword(authService,email,password)
+            await addUserDoc(data)
             }else {
-             data =  await signInWithEmailAndPassword(authService,email,password)
+              await signInWithEmailAndPassword(authService,email,password)
             }
-            console.log(data)
         }catch(error){
             console.log(error)
         }
     }
+
     return (
         <form onSubmit={onSubmit}>
         <input name='email' type='email' placeholder='email' value={email} onChange={onChange} required />

@@ -4,27 +4,27 @@ import { v4 as uuidv4 } from 'uuid';
 import { dbService, storageService } from '../../firebase';
 import {collection, addDoc } from 'firebase/firestore'
 
-import './TweetForm.css'
+import './ChatForm.css'
 
-interface TweetFormProps {
+interface ChatFormProps {
     userId: string
     userName: string | null;
     userImage: string | null;
 }
 
-const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
-    const [tweet,setTweet] = useState("");
+const ChatForm = ({userId,userName,userImage}:ChatFormProps ) => {
+    const [chat,setChat] = useState("");
     const [readerUrl, setReaderUrl] = useState("")
 
     const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setTweet(value)
+        setChat(value)
     }
     const onSubmit = async(event: React.FormEvent) => {
         event.preventDefault();
         const storageRef = ref(storageService, `${userId}/${uuidv4()}`)
         let imageUrl = ""
-        if(tweet !== ""){
+        if(chat !== ""){
             if(readerUrl !== ""){
                 await uploadString(
                             storageRef,
@@ -33,8 +33,8 @@ const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
                             )
                 imageUrl = await getDownloadURL(storageRef)
             }
-            const tweetObj = {
-                text: tweet,
+            const chatObj = {
+                text: chat,
                 createAt:Date.now(),
                 imageUrl,
                 author:{
@@ -43,9 +43,9 @@ const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
                     userImage
                 }
             }
-                await addDoc(collection(dbService, 'tweets') ,tweetObj)
+                await addDoc(collection(dbService, 'chats') ,chatObj)
                 }
-                setTweet("")
+                setChat("")
                 setReaderUrl("")
         
     }
@@ -65,9 +65,9 @@ const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
     }
     const onClearURLClick = () => setReaderUrl("")
     return (
-        <form className="tweetForm" onSubmit={onSubmit}>
-        <input value={tweet} onChange={onChange} type='textarea' placeholder="What's happening?" />
-        <input type='submit' value="Tweet" />
+        <form className="chatForm" onSubmit={onSubmit}>
+        <input value={chat} onChange={onChange} type='textarea' placeholder="Type Chat" />
+        <input type='submit' value="Chat!" />
         <input type="file" accept="image/*" onChange={onFileChange} />
         {readerUrl && (
             <>
@@ -79,4 +79,4 @@ const TweetForm = ({userId,userName,userImage}:TweetFormProps ) => {
     )
 }
 
-export default TweetForm
+export default ChatForm

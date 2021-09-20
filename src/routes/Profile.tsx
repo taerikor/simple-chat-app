@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { signOut, User } from '@firebase/auth'
 import { authService, dbService } from '../firebase'
 import { useHistory } from 'react-router'
-import {getDocs, where, collection,query,orderBy,DocumentData} from 'firebase/firestore'
+import {getDocs, where, collection,query,orderBy} from 'firebase/firestore'
 import EditProfile from '../components/EditProfile'
-import Tweet from '../components/Tweet'
-import {tweetsState} from './Home'
 
 
 interface ProfileProps {
@@ -21,7 +19,7 @@ const Profile = ({renderUserName,userObj,userName}:ProfileProps):JSX.Element => 
         history.push("/")
     }
     const getMyTweets = async() => {
-        const q = query(collection(dbService, "tweets"),where("userId","==",userObj.uid),orderBy("createAt",'desc'))
+        const q = query(collection(dbService, "chats"),where("userId","==",userObj.uid),orderBy("createAt",'desc'))
         const docs = await getDocs(q)
         // const myTweets = docs.docs.map((doc) => ({
         //     id: doc.id,
@@ -38,10 +36,10 @@ const Profile = ({renderUserName,userObj,userName}:ProfileProps):JSX.Element => 
     }, [])
 
     return (
-        <>
+        <div style={{'marginTop':'50px'}}>
            <EditProfile renderUserName={renderUserName} userName={userName} userObj={userObj} />
            <button onClick={onSignOutClick}>Log Out</button>
-        </>
+        </div>
     )
 }
 

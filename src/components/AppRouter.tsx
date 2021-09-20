@@ -15,7 +15,7 @@ interface AppRouterProps {
 
 const AppRouter = ({isLoggedIn,userObj}:AppRouterProps):JSX.Element => {
 
-    const [displayName,setDisplayName] = useState('')
+    const [displayName,setDisplayName] = useState('User')
 
     const renderUserName = (newName:string):void => {
         setDisplayName(newName)
@@ -33,11 +33,6 @@ const AppRouter = ({isLoggedIn,userObj}:AppRouterProps):JSX.Element => {
         <Router>
             {isLoggedIn && <Navigation displayName={displayName}/>}
             <Switch>
-                <div
-                style={{
-                    'marginTop': '50px'
-                }}
-                >
                 {isLoggedIn && userObj ? (
                     <>
                     <Route exact path='/'>
@@ -53,7 +48,6 @@ const AppRouter = ({isLoggedIn,userObj}:AppRouterProps):JSX.Element => {
                     </Route>
                 )
                 }
-                </div>
             </Switch>
         </Router>
     )
