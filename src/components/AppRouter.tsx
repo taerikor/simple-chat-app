@@ -18,14 +18,14 @@ const AppRouter = ({userObj}:AppRouterProps):JSX.Element => {
 
     return (
         <Router>
-            {userObj && <Navigation displayName={userObj.displayName}/>}
+            {userObj && <Navigation userId={userObj.userId} displayName={userObj.displayName}/>}
             <Switch>
                 {userObj ? (
                     <>
                     <Route exact path='/'>
                         <Home userObj={userObj}/>
                     </Route>
-                    <Route exact path='/profile'>
+                    <Route exact path='/:userId'>
                         <Profile userObj={userObj} userName={userObj.displayName} />
                     </Route>
                     </>

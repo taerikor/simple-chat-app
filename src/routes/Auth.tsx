@@ -34,7 +34,7 @@ const Auth = (): JSX.Element => {
             if(userInfo.providerId === emailAndPasswordUserProviderId){
                 userObj = {
                     displayName: "User",
-                    photoURL:`https://source.unsplash.com/user/${data.user.uid}/300x300`,
+                    photoURL:"https://freesvg.org/img/abstract-user-flat-1.png",
                     userId: data.user.uid,
                     userDesc:""
                  }
@@ -48,7 +48,7 @@ const Auth = (): JSX.Element => {
             }
             if(userInfo.isNewUser){
                const data = await addDoc(collection(dbService, 'users') ,userObj)
-               console.log(data)
+               console.log(data.path)
             }
         }
     }

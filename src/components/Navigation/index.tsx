@@ -4,28 +4,29 @@ import { useLocation } from 'react-router'
 import "./Navigation.css"
 interface NavigationProps {
     displayName: string
+    userId: string;
 }
-const Navigation = ({displayName}:NavigationProps):JSX.Element => {
-    const [pathname,setPathname ] = useState('/')
+const Navigation = ({displayName,userId}:NavigationProps):JSX.Element => {
+    const [isHome,setIsHome ] = useState(true)
     const location = useLocation()
 
     useEffect(()=> {
         if(location.pathname === '/'){
-            setPathname('/')
-        }else if(location.pathname === '/profile'){
-            setPathname('/profile')
+            setIsHome(true)
+        }else {
+            setIsHome(false)
         }
     },[location])
 
-    if(pathname === '/'){
+    if(isHome){
         return (
             <nav>
-                    <Link to="/profile">
+                    <Link to={`/${userId}`}>
                         {displayName}
                     </Link>
         </nav>
         )
-    }else if(pathname === '/profile'){
+    }else {
         return (
             <nav>
                     <Link to="/">
@@ -35,7 +36,6 @@ const Navigation = ({displayName}:NavigationProps):JSX.Element => {
         </nav>
         )
     }
-    return <></>
 }
 
 export default Navigation

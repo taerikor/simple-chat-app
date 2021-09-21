@@ -1,5 +1,6 @@
 import { collection, doc, DocumentData, getDoc, getDocs, query, where } from '@firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { dbService } from '../../firebase'
 import { userObjState } from '../App'
 
@@ -32,10 +33,10 @@ const UserCard = ({authorId}:UserCardProps) => {
     return (
         <div className="user_card">
             {userCardObj && (
-                <>
+                <Link to={`/${authorId}`}>
                 <img className="user_card_img" src={userCardObj.photoURL} alt='user' />
                 <h4>{userCardObj.displayName}</h4>
-                </>
+                </Link>
             )}
         </div>
     )
