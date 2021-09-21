@@ -11,11 +11,7 @@ export interface ChatsState {
     text: string;
     imageUrl: string;
     createAt: number;
-    author:{
-        userName:string;
-        userId: string;
-        userImage: string
-    }
+    authorId:string;
 }
 
 interface HomeProps {
@@ -36,11 +32,7 @@ const Home = ({userObj}:HomeProps):JSX.Element => {
                 createAt:doc.data().createAt,
                 text: doc.data().text,
                 imageUrl: doc.data().imageUrl,
-                author:{
-                    userName:doc.data().author.userName,
-                    userId: doc.data().author.userId,
-                    userImage: doc.data().author.userImage
-                }
+                authorId:doc.data().authorId
             }))
             setChats(newChats)
         })
@@ -61,9 +53,9 @@ const Home = ({userObj}:HomeProps):JSX.Element => {
                     'marginBottom': '50px',
                             }}
         >
-            {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.userId === chat.author.userId}/>)}
+            {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.userId === chat.authorId}/>)}
         </div>
-            <ChatForm userId={userObj.userId} userName={userObj.displayName } userImage={userObj.photoURL} />
+            <ChatForm userId={userObj.userId} />
         </div>
     )
 }

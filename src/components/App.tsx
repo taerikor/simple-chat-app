@@ -23,6 +23,8 @@ function App():JSX.Element {
     onAuthStateChanged(authService, (user) => {
       if(user){
         getUserDoc(user)
+      }else{
+        setUserObj(null)
       }
       setInit(true)
     } )

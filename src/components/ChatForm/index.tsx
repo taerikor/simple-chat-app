@@ -8,11 +8,9 @@ import './ChatForm.css'
 
 interface ChatFormProps {
     userId: string
-    userName: string | null;
-    userImage: string | null;
 }
 
-const ChatForm = ({userId,userName,userImage}:ChatFormProps ) => {
+const ChatForm = ({userId}:ChatFormProps ) => {
     const [chat,setChat] = useState("");
     const [readerUrl, setReaderUrl] = useState("")
 
@@ -37,16 +35,13 @@ const ChatForm = ({userId,userName,userImage}:ChatFormProps ) => {
                 text: chat,
                 createAt:Date.now(),
                 imageUrl,
-                author:{
-                    userId,
-                    userName,
-                    userImage
-                }
+                authorId:userId
             }
                 await addDoc(collection(dbService, 'chats') ,chatObj)
                 }
                 setChat("")
                 setReaderUrl("")
+                
         
     }
     const onFileChange = (event:React.ChangeEvent<HTMLInputElement>) => {

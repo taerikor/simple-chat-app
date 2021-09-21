@@ -16,11 +16,12 @@ interface Props {
 
 const Chat = ({chatObj,isOwner}:Props) => {
     const chatDiv = useRef<HTMLDivElement>(null)
-    const onDeleteClick = () => {
+
+    const onDeleteClick = async () => {
+        await deleteDoc(doc(dbService,`chats/${chatObj.id}`))
+        await deleteObject(ref(storageService,chatObj.imageUrl))
         const confirm = window.confirm("you really delete this?")
         if(confirm){
-            deleteDoc(doc(dbService,`chats/${chatObj.id}`))
-            deleteObject(ref(storageService,chatObj.imageUrl))
 
         }
     }
@@ -43,7 +44,7 @@ const Chat = ({chatObj,isOwner}:Props) => {
             <div ref={chatDiv} >
                 {chatObj.imageUrl && <img src={chatObj.imageUrl} height="80px" width="80px" alt='post' />}
                 <div>
-                    <UserCard userObj={chatObj.author}/>
+                    <UserCard authorId={chatObj.authorId}/>
                 </div>
                 <h3>{chatObj.text}</h3>
                 <div>

@@ -47,7 +47,8 @@ const Auth = (): JSX.Element => {
                 }
             }
             if(userInfo.isNewUser){
-                await addDoc(collection(dbService, 'users') ,userObj)
+               const data = await addDoc(collection(dbService, 'users') ,userObj)
+               console.log(data)
             }
         }
     }
