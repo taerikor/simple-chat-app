@@ -18,11 +18,10 @@ const Chat = ({chatObj,isOwner}:Props) => {
     const chatDiv = useRef<HTMLDivElement>(null)
 
     const onDeleteClick = async () => {
-        await deleteDoc(doc(dbService,`chats/${chatObj.id}`))
-        await deleteObject(ref(storageService,chatObj.imageUrl))
         const confirm = window.confirm("you really delete this?")
         if(confirm){
-
+            await deleteDoc(doc(dbService,`chats/${chatObj.id}`))
+            await deleteObject(ref(storageService,chatObj.imageUrl))
         }
     }
 

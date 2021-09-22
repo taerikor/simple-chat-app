@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { signOut, User } from '@firebase/auth'
 import { authService, dbService } from '../firebase'
-import { useHistory, useLocation } from 'react-router'
-import {getDocs, where, collection,query,orderBy} from 'firebase/firestore'
+import { useHistory } from 'react-router'
+import {getDocs, where, collection,query,orderBy,getDoc,doc,DocumentData} from 'firebase/firestore'
 import EditProfile from '../components/EditProfile'
 import { userObjState } from '../components/App'
 import {withRouter, RouteComponentProps } from 'react-router-dom'
@@ -13,7 +13,6 @@ export interface PathParamsProps {
   
 interface ProfileProps {
     userObj: userObjState
-    userName: string;
 }
 interface userInfoObjState {
     displayName: string;
@@ -21,26 +20,29 @@ interface userInfoObjState {
     userDesc: string;
 }
 
-const Profile: React.FunctionComponent<ProfileProps & RouteComponentProps<PathParamsProps>> = ({match,userObj,userName}):JSX.Element => {
+const Profile: React.FunctionComponent<
+ProfileProps & RouteComponentProps<PathParamsProps>> = 
+({match,userObj}):JSX.Element => {
     const [userInfoObj,setUserInfoObj] = useState<userInfoObjState | null>(null);
+    const [isEdit, setIsEdit ] = useState(false);
     const history = useHistory()
+
+    const {params:{userId}} = match;
+
     const onSignOutClick = async() => {
         signOut(authService)
         history.push("/")
     }
 
     const getUserInfo = async() => {
-        const {params:{userId}} = match;
-        const userQuery = query(collection(dbService, "users"),where("userId","==",userId))
-        const data = await getDocs(userQuery)
-        // const data = doc(dbService,'users',`${authorId}`)
-        // const user = await getDoc(data)
-        const userData = data.docs.map((doc)=> ({
-            displayName: doc.data().displayName,
-            photoURL: doc.data().photoURL,
-            userDesc: doc.data().userDesc
-        }))
-        setUserInfoObj(userData[0])
+        const docRef = doc(dbService, "users", `${userId}`);
+        const docSnap = await getDoc(docRef);
+        const userData = {
+            displayName: docSnap.data()?.displayName,
+            photoURL: docSnap.data()?.photoURL,
+            userDesc: docSnap.data()?.userDesc
+        }
+        setUserInfoObj(userData)
     }
 
     const getMyTweets = async() => {
@@ -61,16 +63,24 @@ const Profile: React.FunctionComponent<ProfileProps & RouteComponentProps<PathPa
         getUserInfo()
     }, [])
 
+    const onEditToggle = () => {
+        setIsEdit((prev) => !prev)
+    }
     return (
         <div style={{'marginTop':'50px'}}>
-           <EditProfile userName={userName} userObj={userObj} />
            <button onClick={onSignOutClick}>Log Out</button>
            {userInfoObj && (
                <div>
-               <img src={userInfoObj.photoURL} alt='profile'/>
+               <img height='100px' width='100px' src={userInfoObj.photoURL} alt='profile'/>
                <h2>{userInfoObj.displayName}</h2>
-               <h4>{userInfoObj.userDesc ? userInfoObj.userDesc : 'Null'}</h4>
+               <h4>{userInfoObj.userDesc}</h4>
                </div>
+           )}
+           {userId === userObj.userId && (
+               <>
+               <button onClick={onEditToggle}>Edit</button>
+               {isEdit && <EditProfile userObj={userObj} />}
+               </>
            )}
         </div>
     )

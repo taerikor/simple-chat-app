@@ -1,8 +1,7 @@
-import { collection, doc, DocumentData, getDoc, getDocs, query, where } from '@firebase/firestore'
+import { doc, getDoc } from '@firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { dbService } from '../../firebase'
-import { userObjState } from '../App'
 
 import './UserCard.css'
 
@@ -20,15 +19,13 @@ const UserCard = ({authorId}:UserCardProps) => {
     },[])
 
     const getUserInfo = async() => {
-        const userQuery = query(collection(dbService, "users"),where("userId","==",authorId))
-        const data = await getDocs(userQuery)
-        // const data = doc(dbService,'users',`${authorId}`)
-        // const user = await getDoc(data)
-        const userData = data.docs.map((doc)=> ({
-            displayName: doc.data().displayName,
-            photoURL: doc.data().photoURL,
-        }))
-        setUserCardObj(userData[0])
+        const docRef = doc(dbService, "users", `${authorId}`);
+        const docSnap = await getDoc(docRef);
+        const userData = {
+            displayName: docSnap.data()?.displayName,
+            photoURL: docSnap.data()?.photoURL,
+        }
+        setUserCardObj(userData)
     }
     return (
         <div className="user_card">

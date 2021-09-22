@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { signInWithPopup,GoogleAuthProvider,GithubAuthProvider,UserCredential,getAdditionalUserInfo } from 'firebase/auth'
 import { authService, dbService } from '../firebase'
 import AuthForm from '../components/AuthForm'
-import { addDoc, collection } from '@firebase/firestore'
+import { addDoc, collection, doc, setDoc } from '@firebase/firestore'
 
 const Auth = (): JSX.Element => {
     const [newAccount, setNewAccount] = useState(false)
@@ -36,19 +36,18 @@ const Auth = (): JSX.Element => {
                     displayName: "User",
                     photoURL:"https://freesvg.org/img/abstract-user-flat-1.png",
                     userId: data.user.uid,
-                    userDesc:""
+                    userDesc:"Empty"
                  }
             }else if (userInfo.providerId === googleUserProviderId){
                 userObj = {
                     displayName: data.user.displayName,
                     photoURL:data.user.photoURL,
                     userId: data.user.uid,
-                    userDesc:""
+                    userDesc:"Empty"
                 }
             }
             if(userInfo.isNewUser){
-               const data = await addDoc(collection(dbService, 'users') ,userObj)
-               console.log(data.path)
+               await setDoc(doc(collection(dbService, 'users'),`${data.user.uid}`) ,userObj)
             }
         }
     }

@@ -26,7 +26,7 @@ const AppRouter = ({userObj}:AppRouterProps):JSX.Element => {
                         <Home userObj={userObj}/>
                     </Route>
                     <Route exact path='/:userId'>
-                        <Profile userObj={userObj} userName={userObj.displayName} />
+                        <Profile userObj={userObj} />
                     </Route>
                     </>
                 ) : (
