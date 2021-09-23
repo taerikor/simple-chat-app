@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { authService, dbService } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth'
 import AppRouter from './AppRouter';
-import { collection, doc, getDoc, onSnapshot, query, where } from '@firebase/firestore';
+import { collection, onSnapshot, query, where } from '@firebase/firestore';
 
 
 export interface userObjState {
   displayName:string;
-  photoURL:string;
+  userImage:string;
   userDesc:string;
   userId:string
   userInterface?: User
@@ -35,7 +35,7 @@ function App():JSX.Element {
     onSnapshot(userQuery,(snapshot)=>{
       let currentUserObj:userObjState[] = snapshot.docs.map((doc)=> ({
         displayName: doc.data().displayName,
-        photoURL: doc.data().photoURL,
+        userImage: doc.data().userImage,
         userDesc: doc.data().userDesc,
         userId: doc.data().userId
       }))

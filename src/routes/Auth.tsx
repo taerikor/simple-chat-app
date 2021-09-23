@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { signInWithPopup,GoogleAuthProvider,GithubAuthProvider,UserCredential,getAdditionalUserInfo } from 'firebase/auth'
 import { authService, dbService } from '../firebase'
 import AuthForm from '../components/AuthForm'
-import { addDoc, collection, doc, setDoc } from '@firebase/firestore'
+import { collection, doc, setDoc } from '@firebase/firestore'
 
 const Auth = (): JSX.Element => {
     const [newAccount, setNewAccount] = useState(false)
@@ -34,14 +34,14 @@ const Auth = (): JSX.Element => {
             if(userInfo.providerId === emailAndPasswordUserProviderId){
                 userObj = {
                     displayName: "User",
-                    photoURL:"https://freesvg.org/img/abstract-user-flat-1.png",
+                    userImage:"https://freesvg.org/img/abstract-user-flat-1.png",
                     userId: data.user.uid,
                     userDesc:"Empty"
                  }
             }else if (userInfo.providerId === googleUserProviderId){
                 userObj = {
                     displayName: data.user.displayName,
-                    photoURL:data.user.photoURL,
+                    userImage:data.user.photoURL,
                     userId: data.user.uid,
                     userDesc:"Empty"
                 }

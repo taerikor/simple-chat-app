@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { updateProfile } from '@firebase/auth'
 import { userObjState } from '../App'
+import { doc, setDoc } from '@firebase/firestore'
+import { dbService } from '../../firebase'
 
 interface ProfileProps {
     userObj: userObjState
@@ -10,13 +11,19 @@ interface ProfileProps {
 const EditProfile = ({userObj}:ProfileProps) => {
     const [newName, setNewName] = useState(userObj.displayName)
     const [newDesc, setNewDesc] = useState(userObj.userDesc)
+
     const onSubmit  = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if(newName !== userObj.displayName){
             if(userObj.userInterface === undefined) {
                 return null;
             }
-                await updateProfile(userObj.userInterface,{displayName:newName})
+            await setDoc(doc(dbService,`users/${userObj.userId}`),{
+                displayName:newName,
+                userId:userObj.userId,
+                userImage:userObj.userImage,
+                userDesc:newDesc,
+            })
         }
 
     }

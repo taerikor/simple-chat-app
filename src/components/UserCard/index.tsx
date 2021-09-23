@@ -10,7 +10,7 @@ interface UserCardProps {
 }
 interface userCardObjState {
     displayName: string;
-    photoURL: string;
+    userImage: string;
 }
 const UserCard = ({authorId}:UserCardProps) => {
     const [userCardObj,setUserCardObj] = useState<userCardObjState | null>(null)
@@ -23,7 +23,7 @@ const UserCard = ({authorId}:UserCardProps) => {
         const docSnap = await getDoc(docRef);
         const userData = {
             displayName: docSnap.data()?.displayName,
-            photoURL: docSnap.data()?.photoURL,
+           userImage: docSnap.data()?.userImage,
         }
         setUserCardObj(userData)
     }
@@ -31,7 +31,7 @@ const UserCard = ({authorId}:UserCardProps) => {
         <div className="user_card">
             {userCardObj && (
                 <Link to={`/${authorId}`}>
-                <img className="user_card_img" src={userCardObj.photoURL} alt='user' />
+                <img className="user_card_img" src={userCardObj.userImage} alt='user' />
                 <h4>{userCardObj.displayName}</h4>
                 </Link>
             )}

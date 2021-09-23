@@ -3,7 +3,6 @@ import { dbService } from '../firebase';
 import {collection, onSnapshot,query,orderBy} from 'firebase/firestore'
 import Chat from '../components/Chat'
 import ChatForm from '../components/ChatForm';
-import { User } from '@firebase/auth';
 import { userObjState } from '../components/App';
 
 export interface ChatsState {

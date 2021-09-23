@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { signOut, User } from '@firebase/auth'
+import { signOut } from '@firebase/auth'
 import { authService, dbService } from '../firebase'
 import { useHistory } from 'react-router'
-import {getDocs, where, collection,query,orderBy,getDoc,doc,DocumentData} from 'firebase/firestore'
+import {
+    getDocs, where, collection,query,orderBy,
+    getDoc,doc} from 'firebase/firestore'
 import EditProfile from '../components/EditProfile'
 import { userObjState } from '../components/App'
 import {withRouter, RouteComponentProps } from 'react-router-dom'
@@ -16,7 +18,7 @@ interface ProfileProps {
 }
 interface userInfoObjState {
     displayName: string;
-    photoURL: string;
+    userImage: string;
     userDesc: string;
 }
 
@@ -39,23 +41,23 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
         const docSnap = await getDoc(docRef);
         const userData = {
             displayName: docSnap.data()?.displayName,
-            photoURL: docSnap.data()?.photoURL,
+            userImage: docSnap.data()?.userImage,
             userDesc: docSnap.data()?.userDesc
         }
         setUserInfoObj(userData)
     }
 
     const getMyTweets = async() => {
-        // const q = query(collection(dbService, "chats"),where("userId","==",userObj.userId),orderBy("createAt",'desc'))
-        // const docs = await getDocs(q)
-        // const myTweets = docs.docs.map((doc) => ({
-        //     id: doc.id,
-        //     createAt:doc.data().createAt,
-        //     text: doc.data().text,
-        //     userId: doc.data().userId,
-        //     imageUrl: doc.data().imageUrl
-        // }))
-        
+        const q = query(collection(dbService, "chats"),where("authorId","==", userId),orderBy("createAt",'desc'))
+        const docs = await getDocs(q)
+        const myChats = docs.docs.map((doc) => ({
+            id: doc.id,
+            createAt:doc.data().createAt,
+            text: doc.data().text,
+            userId: doc.data().userId,
+            imageUrl: doc.data().imageUrl
+        }))
+        console.log(myChats)
         // setTweets(myTweets)
     }
     useEffect(() => {
@@ -71,7 +73,7 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
            <button onClick={onSignOutClick}>Log Out</button>
            {userInfoObj && (
                <div>
-               <img height='100px' width='100px' src={userInfoObj.photoURL} alt='profile'/>
+               <img height='100px' width='100px' src={userInfoObj.userImage} alt='profile'/>
                <h2>{userInfoObj.displayName}</h2>
                <h4>{userInfoObj.userDesc}</h4>
                </div>
