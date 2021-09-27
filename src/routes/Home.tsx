@@ -42,20 +42,17 @@ const Home = ({userObj}:HomeProps):JSX.Element => {
     },[chats])
 
     return (
+        <>
         <div
-        style={{'height':'100vh'}}
-        >
-        <div
-                style={{
-                    'display':'flex',
-                    'flexDirection':'column',
-                    'marginBottom': '50px',
-                            }}
+        style={{
+            'margin':'60px 20px',
+            'marginBottom': '100px'
+    }}
         >
             {chats.map((chat) => <Chat key={chat.id} chatObj={chat} isOwner={userObj.userId === chat.authorId}/>)}
         </div>
             <ChatForm userId={userObj.userId} />
-        </div>
+        </>
     )
 }
 

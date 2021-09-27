@@ -28,14 +28,16 @@ const UserCard = ({authorId}:UserCardProps) => {
         setUserCardObj(userData)
     }
     return (
+            <Link to={`/${authorId}`}>
         <div className="user_card">
             {userCardObj && (
-                <Link to={`/${authorId}`}>
+                <>
                 <img className="user_card_img" src={userCardObj.userImage} alt='user' />
                 <h4>{userCardObj.displayName}</h4>
-                </Link>
-            )}
+                </>
+                )}
         </div>
+                </Link>
     )
 }
 

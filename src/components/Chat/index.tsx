@@ -11,7 +11,7 @@ import UserCard from '../UserCard'
 
 interface Props {
     chatObj: ChatsState;
-    isOwner: boolean;
+    isOwner?: boolean;
 }
 
 const Chat = ({chatObj,isOwner}:Props) => {
@@ -42,12 +42,12 @@ const Chat = ({chatObj,isOwner}:Props) => {
         <div className='chat_container'>
             <div ref={chatDiv} >
                 {chatObj.imageUrl && <img src={chatObj.imageUrl} height="80px" width="80px" alt='post' />}
-                <div>
                     <UserCard authorId={chatObj.authorId}/>
+                <div className='chatBox'>
+                    <h3>{chatObj.text}</h3>
                 </div>
-                <h3>{chatObj.text}</h3>
                 <div>
-                    <h4>{timeForToday(chatObj.createAt)}</h4>
+                    <p>{timeForToday(chatObj.createAt)}</p>
                     {isOwner && <button onClick={onDeleteClick}>Delete</button>}
                 </div>
             </div>

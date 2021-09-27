@@ -60,16 +60,20 @@ const ChatForm = ({userId}:ChatFormProps ) => {
     }
     const onClearURLClick = () => setReaderUrl("")
     return (
-        <form className="chatForm" onSubmit={onSubmit}>
-        <input value={chat} onChange={onChange} type='textarea' placeholder="Type Chat" />
-        <input type='submit' value="Chat!" />
-        <input type="file" accept="image/*" onChange={onFileChange} />
+        <form onSubmit={onSubmit}>
+        <div className="chatForm">
         {readerUrl && (
             <>
-                <img src={readerUrl} alt="upload" height="50px" width="50px" />
+                <img src={readerUrl} alt="upload" />
                 <button onClick={onClearURLClick}>Clear</button>
             </>
         )}
+        <div className='inputBox'>
+        <input className="chatInput" value={chat} onChange={onChange} type='textarea' placeholder="Type Chat" />
+        <input type='submit' value="Chat!" />
+        <input type="file" accept="image/*" onChange={onFileChange} />
+        </div>
+    </div>
     </form>
     )
 }

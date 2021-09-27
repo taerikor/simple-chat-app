@@ -3,7 +3,8 @@
 }
 .ownerChat {
   display: flex;
-  justify-content: right;
+
+  flex-direction: row-reverse;
   background-color: bisque;
 }
 
@@ -16,4 +17,11 @@
   display: flex;
   justify-content: left;
   background-color: cadetblue;
+}
+.chatBox {
+  max-width: 80%;
+  background-color: aliceblue;
+  padding: 0px 20px;
+  margin: 5px 10px;
+  border-radius: 5px;
 }

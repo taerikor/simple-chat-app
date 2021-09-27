@@ -8,6 +8,8 @@ import {
 import EditProfile from '../components/EditProfile'
 import { userObjState } from '../components/App'
 import {withRouter, RouteComponentProps } from 'react-router-dom'
+import { ChatsState } from './Home'
+import Chat from '../components/Chat'
 
 export interface PathParamsProps {
     userId: string
@@ -26,7 +28,9 @@ const Profile: React.FunctionComponent<
 ProfileProps & RouteComponentProps<PathParamsProps>> = 
 ({match,userObj}):JSX.Element => {
     const [userInfoObj,setUserInfoObj] = useState<userInfoObjState | null>(null);
+    const [myChats, setMyChats] = useState<ChatsState[] | null>(null)
     const [isEdit, setIsEdit ] = useState(false);
+    const [isMyChat, setIsMyChat] = useState(false);
     const history = useHistory()
 
     const {params:{userId}} = match;
@@ -61,16 +65,32 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
             imageUrl: doc.data().imageUrl
         }))
         console.log(myChats)
-        // setTweets(myTweets)
     }
     useEffect(() => {
-        getMyTweets()
         getUserInfo()
     }, [])
 
-    const onEditToggle = () => {
+    const onToggleEdit = () => {
         setIsEdit((prev) => !prev)
     }
+    const onGetMyChats = async () => {
+        if(isMyChat === true){
+            setIsMyChat(false)
+        }else{
+            const q = query(collection(dbService, "chats"),where("authorId","==", userId),orderBy("createAt",'desc'))
+            const docs = await getDocs(q)
+            const myChats= docs.docs.map((doc) => ({
+                id: doc.id,
+                createAt:doc.data().createAt,
+                text: doc.data().text,
+                authorId: doc.data().authorId,
+                imageUrl: doc.data().imageUrl
+            }))
+            setMyChats(myChats)
+            setIsMyChat(true)
+        }
+    }
+
     return (
         <div style={{'marginTop':'50px'}}>
            <button onClick={onSignOutClick}>Log Out</button>
@@ -83,11 +103,18 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
            )}
            {userId === userObj.userId && (
                <>
-               {isEdit ? <EditProfile userObj={userObj} onEditToggle={onEditToggle} rerenderUserInfo={rerenderUserInfo} />
-                    :<button onClick={onEditToggle}>Edit</button>}
+               {isEdit ? <EditProfile userObj={userObj} onToggleEdit={onToggleEdit} rerenderUserInfo={rerenderUserInfo} />
+                    :<button onClick={onToggleEdit}>Edit</button>}
                </>
            )}
+        <div>
+        <button onClick={onGetMyChats}>{`${isMyChat? 'Close': 'Open'} my chats`}</button>
+           {isMyChat && (
+               myChats?.map((chat) => (
+                <Chat key={chat.id} chatObj={chat}/>))
+           )}
         </div>
+                   </div>
     )
 }
 

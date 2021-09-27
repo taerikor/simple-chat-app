@@ -6,12 +6,12 @@ import { userInfoObjState } from '../../routes/Profile'
 
 interface ProfileProps {
     userObj: userObjState;
-    onEditToggle:() => void;
+    onToggleEdit:() => void;
     rerenderUserInfo:(data:userInfoObjState) => void;
 }
 
 
-const EditProfile = ({userObj,onEditToggle,rerenderUserInfo}:ProfileProps) => {
+const EditProfile = ({userObj,onToggleEdit,rerenderUserInfo}:ProfileProps) => {
     const [newName, setNewName] = useState(userObj.displayName)
     const [newDesc, setNewDesc] = useState(userObj.userDesc)
 
@@ -28,7 +28,7 @@ const EditProfile = ({userObj,onEditToggle,rerenderUserInfo}:ProfileProps) => {
             userImage:userObj.userImage,
             userDesc:newDesc
         })
-        onEditToggle()
+        onToggleEdit()
     }
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
