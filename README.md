@@ -1,3 +1,3 @@
-# Twitter Clone
+# Simple Chat App
 
-with React, TS, Firebase
+real-time chat application with React js, Firebase.
