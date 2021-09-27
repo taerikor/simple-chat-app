@@ -16,7 +16,7 @@ export interface PathParamsProps {
 interface ProfileProps {
     userObj: userObjState
 }
-interface userInfoObjState {
+export interface userInfoObjState {
     displayName: string;
     userImage: string;
     userDesc: string;
@@ -45,6 +45,9 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
             userDesc: docSnap.data()?.userDesc
         }
         setUserInfoObj(userData)
+    }
+    const rerenderUserInfo = (data:userInfoObjState) => {
+        setUserInfoObj(data)
     }
 
     const getMyTweets = async() => {
@@ -80,8 +83,8 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
            )}
            {userId === userObj.userId && (
                <>
-               <button onClick={onEditToggle}>Edit</button>
-               {isEdit && <EditProfile userObj={userObj} />}
+               {isEdit ? <EditProfile userObj={userObj} onEditToggle={onEditToggle} rerenderUserInfo={rerenderUserInfo} />
+                    :<button onClick={onEditToggle}>Edit</button>}
                </>
            )}
         </div>

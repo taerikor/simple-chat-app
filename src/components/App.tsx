@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { authService, dbService } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth'
 import AppRouter from './AppRouter';
-import { collection, onSnapshot, query, where } from '@firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, query, where } from '@firebase/firestore';
 
 
 export interface userObjState {
@@ -31,17 +31,30 @@ function App():JSX.Element {
   }, [])
 
   const getUserDoc = async (data:User) => {
-    const userQuery = query(collection(dbService, "users"),where("userId","==",data.uid))
-    onSnapshot(userQuery,(snapshot)=>{
-      let currentUserObj:userObjState[] = snapshot.docs.map((doc)=> ({
-        displayName: doc.data().displayName,
-        userImage: doc.data().userImage,
-        userDesc: doc.data().userDesc,
-        userId: doc.data().userId
-      }))
-      currentUserObj[0].userInterface = data;
-      setUserObj(currentUserObj[0])
-    })
+      const docRef = doc(dbService, "users", `${data.uid}`);
+      onSnapshot(docRef,(docSnap) => {
+        const userData = {
+            displayName: docSnap.data()?.displayName,
+            userImage: docSnap.data()?.userImage,
+            userDesc: docSnap.data()?.userDesc,
+            userId: docSnap.data()?.userId,
+            userInterface: data
+        }
+        setUserObj(userData)
+      })
+      // const docSnap = await getDoc(docRef);
+
+    // const userQuery = query(collection(dbService, "users"),where("userId","==",data.uid))
+    // onSnapshot(userQuery,(snapshot)=>{
+    //   let currentUserObj:userObjState[] = snapshot.docs.map((doc)=> ({
+    //     displayName: doc.data().displayName,
+    //     userImage: doc.data().userImage,
+    //     userDesc: doc.data().userDesc,
+    //     userId: doc.data().userId
+    //   }))
+    //   currentUserObj[0].userInterface = data;
+    //   setUserObj(currentUserObj[0])
+    // })
   }
   return (
     <>
