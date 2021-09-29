@@ -21,7 +21,6 @@ const Auth = (): JSX.Element => {
             provider = new GithubAuthProvider()
         }
         let data = await signInWithPopup(authService, provider)
-        console.log(data)
         await addUserDoc(data)
     }
 

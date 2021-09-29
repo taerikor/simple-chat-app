@@ -11,6 +11,8 @@ import {withRouter, RouteComponentProps } from 'react-router-dom'
 import { ChatsState } from './Home'
 import Chat from '../components/Chat'
 
+import './Profile.css'
+
 export interface PathParamsProps {
     userId: string
   }
@@ -54,18 +56,6 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
         setUserInfoObj(data)
     }
 
-    const getMyTweets = async() => {
-        const q = query(collection(dbService, "chats"),where("authorId","==", userId),orderBy("createAt",'desc'))
-        const docs = await getDocs(q)
-        const myChats = docs.docs.map((doc) => ({
-            id: doc.id,
-            createAt:doc.data().createAt,
-            text: doc.data().text,
-            userId: doc.data().userId,
-            imageUrl: doc.data().imageUrl
-        }))
-        console.log(myChats)
-    }
     useEffect(() => {
         getUserInfo()
     }, [])
@@ -92,14 +82,17 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
     }
 
     return (
-        <div style={{'marginTop':'50px'}}>
+        <div className='profile-layout'>
            <button onClick={onSignOutClick}>Log Out</button>
            {userInfoObj && (
-               <div>
-               <img height='100px' width='100px' src={userInfoObj.userImage} alt='profile'/>
-               <h2>{userInfoObj.displayName}</h2>
-               <h4>{userInfoObj.userDesc}</h4>
-               </div>
+            <div className='profile-userinfo'>
+                <img src={userInfoObj.userImage} alt='profile'/>
+                <h2>{userInfoObj.displayName}</h2>
+                <div className='profile-userinfo-desc'>
+                    <h4>Description</h4>
+                    <span>{userInfoObj.userDesc}</span>
+                </div>
+            </div>
            )}
            {userId === userObj.userId && (
                <>
