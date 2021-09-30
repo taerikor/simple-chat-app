@@ -42,23 +42,24 @@ ProfileProps & RouteComponentProps<PathParamsProps>> =
         history.push("/")
     }
 
-    const getUserInfo = async() => {
-        const docRef = doc(dbService, "users", `${userId}`);
-        const docSnap = await getDoc(docRef);
-        const userData = {
-            displayName: docSnap.data()?.displayName,
-            userImage: docSnap.data()?.userImage,
-            userDesc: docSnap.data()?.userDesc
-        }
-        setUserInfoObj(userData)
-    }
+   
     const rerenderUserInfo = (data:userInfoObjState) => {
         setUserInfoObj(data)
     }
 
     useEffect(() => {
+        const getUserInfo = async() => {
+            const docRef = doc(dbService, "users", `${userId}`);
+            const docSnap = await getDoc(docRef);
+            const userData = {
+                displayName: docSnap.data()?.displayName,
+                userImage: docSnap.data()?.userImage,
+                userDesc: docSnap.data()?.userDesc
+            }
+            setUserInfoObj(userData)
+        }
         getUserInfo()
-    }, [])
+    }, [userId])
 
     const onToggleEdit = () => {
         setIsEdit((prev) => !prev)

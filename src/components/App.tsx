@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { authService, dbService } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth'
 import AppRouter from './AppRouter';
-import { collection, doc, getDoc, onSnapshot, query, where } from '@firebase/firestore';
+import { doc, onSnapshot } from '@firebase/firestore';
 
 
 export interface userObjState {

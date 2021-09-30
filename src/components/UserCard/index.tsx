@@ -14,19 +14,20 @@ interface userCardObjState {
 }
 const UserCard = ({authorId}:UserCardProps) => {
     const [userCardObj,setUserCardObj] = useState<userCardObjState | null>(null)
-    useEffect(()=>{
-        getUserInfo()
-    },[])
 
-    const getUserInfo = async() => {
-        const docRef = doc(dbService, "users", `${authorId}`);
-        const docSnap = await getDoc(docRef);
-        const userData = {
-            displayName: docSnap.data()?.displayName,
-           userImage: docSnap.data()?.userImage,
+    useEffect(()=>{
+        const getUserInfo = async() => {
+            const docRef = doc(dbService, "users", `${authorId}`);
+            const docSnap = await getDoc(docRef);
+            const userData = {
+                displayName: docSnap.data()?.displayName,
+               userImage: docSnap.data()?.userImage,
+            }
+            setUserCardObj(userData)
         }
-        setUserCardObj(userData)
-    }
+        getUserInfo()
+    },[authorId])
+
     return (
             <Link to={`/${authorId}`}>
         <div className="user_card">
