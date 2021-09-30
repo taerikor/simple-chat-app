@@ -1,4 +1,4 @@
-function timeForToday(value: number) {
+function timeForToday(value: number):string {
     const today = new Date();
     const timeValue = new Date(value);
 

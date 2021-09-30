@@ -19,7 +19,7 @@ interface HomeProps {
 
 
 
-const Home = ({userObj}:HomeProps):JSX.Element => {
+const Home:React.FunctionComponent<HomeProps> = ({userObj}) => {
     
     const [chats,setChats] = useState<ChatsState[] | []>([]);
 

@@ -15,7 +15,7 @@ export interface userObjState {
 
 
 
-function App():JSX.Element {
+const App:React.FunctionComponent = () => {
   const [init, setInit] = useState(false)
   const [userObj, setUserObj] = useState<userObjState | null>(null);
 

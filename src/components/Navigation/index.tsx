@@ -6,7 +6,7 @@ interface NavigationProps {
     displayName: string
     userId: string;
 }
-const Navigation = ({displayName,userId}:NavigationProps):JSX.Element => {
+const Navigation:React.FunctionComponent<NavigationProps> = ({displayName,userId}):JSX.Element => {
     const [isHome,setIsHome ] = useState(true)
     const location = useLocation()
 

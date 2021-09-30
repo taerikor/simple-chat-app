@@ -9,12 +9,12 @@ import timeForToday from '../../utils/Date'
 import UserCard from '../UserCard'
 
 
-interface Props {
+interface ChatProps {
     chatObj: ChatsState;
     isOwner?: boolean;
 }
 
-const Chat = ({chatObj,isOwner}:Props) => {
+const Chat:React.FunctionComponent<ChatProps> = ({chatObj,isOwner}) => {
     const chatDiv = useRef<HTMLDivElement>(null)
 
     const onDeleteClick = async () => {

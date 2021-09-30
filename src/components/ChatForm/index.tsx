@@ -10,7 +10,7 @@ interface ChatFormProps {
     userId: string
 }
 
-const ChatForm = ({userId}:ChatFormProps ) => {
+const ChatForm: React.FunctionComponent<ChatFormProps> = ({userId}:ChatFormProps ) => {
     const [chat,setChat] = useState("");
     const [readerUrl, setReaderUrl] = useState("")
 

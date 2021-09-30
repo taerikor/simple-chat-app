@@ -7,7 +7,7 @@ interface AuthFormProps {
     addUserDoc: (data: UserCredential) => Promise<void>
 }
 
-const AuthForm = ({newAccount,addUserDoc}:AuthFormProps) => {
+const AuthForm:React.FunctionComponent<AuthFormProps> = ({newAccount,addUserDoc}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const onChange = (event: React.ChangeEvent<HTMLInputElement>):void => {

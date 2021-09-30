@@ -13,7 +13,7 @@ interface ProfileProps {
 }
 
 
-const EditProfile = ({userObj,onToggleEdit,rerenderUserInfo}:ProfileProps) => {
+const EditProfile:React.FunctionComponent<ProfileProps> = ({userObj,onToggleEdit,rerenderUserInfo}:ProfileProps) => {
     const [newName, setNewName] = useState(userObj.displayName)
     const [newDesc, setNewDesc] = useState(userObj.userDesc)
     const [readerUrl, setReaderUrl] = useState("")

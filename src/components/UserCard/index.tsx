@@ -12,7 +12,7 @@ interface userCardObjState {
     displayName: string;
     userImage: string;
 }
-const UserCard = ({authorId}:UserCardProps) => {
+const UserCard:React.FunctionComponent<UserCardProps> = ({authorId}) => {
     const [userCardObj,setUserCardObj] = useState<userCardObjState | null>(null)
 
     useEffect(()=>{

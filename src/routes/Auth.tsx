@@ -4,7 +4,7 @@ import { authService, dbService } from '../firebase'
 import AuthForm from '../components/AuthForm'
 import { collection, doc, setDoc } from '@firebase/firestore'
 
-const Auth = (): JSX.Element => {
+const Auth:React.FunctionComponent = () => {
     const [newAccount, setNewAccount] = useState(false)
 
 

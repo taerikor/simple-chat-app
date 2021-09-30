@@ -12,10 +12,7 @@ interface AppRouterProps {
     userObj: userObjState | null
 }
 
-const AppRouter = ({userObj}:AppRouterProps):JSX.Element => {
-
-
-
+const AppRouter:React.FunctionComponent<AppRouterProps> = ({userObj}):JSX.Element => {
     return (
         <Router>
             {userObj && <Navigation userId={userObj.userId} displayName={userObj.displayName}/>}
