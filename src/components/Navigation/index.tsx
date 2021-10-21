@@ -4,6 +4,8 @@ import { useLocation } from "react-router";
 import "./Navigation.css";
 import { authService } from "../../firebase";
 import { signOut } from "@firebase/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 interface NavigationProps {
   userImage: string;
   userId: string;
@@ -48,7 +50,9 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({
   } else {
     return (
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <FontAwesomeIcon icon={faHome} />
+        </Link>
       </nav>
     );
   }
