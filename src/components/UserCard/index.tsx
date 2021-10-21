@@ -1,45 +1,63 @@
-import { doc, getDoc } from '@firebase/firestore'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { dbService } from '../../firebase'
+import { doc, getDoc } from "@firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { dbService } from "../../firebase";
 
-import './UserCard.css'
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  border-radius: 5px;
+  border: beige 1px solid;
+  padding: 0 5px;
+  height: 35px;
+  font-size: 1rem;
+`;
+
+const UserImg = styled.img`
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  margin-right: 5px;
+`;
 
 interface UserCardProps {
-    authorId:string
+  authorId: string;
 }
 interface userCardObjState {
-    displayName: string;
-    userImage: string;
+  displayName: string;
+  userImage: string;
 }
-const UserCard:React.FunctionComponent<UserCardProps> = ({authorId}) => {
-    const [userCardObj,setUserCardObj] = useState<userCardObjState | null>(null)
+const UserCard: React.FunctionComponent<UserCardProps> = ({ authorId }) => {
+  const [userCardObj, setUserCardObj] = useState<userCardObjState | null>(null);
 
-    useEffect(()=>{
-        const getUserInfo = async() => {
-            const docRef = doc(dbService, "users", `${authorId}`);
-            const docSnap = await getDoc(docRef);
-            const userData = {
-                displayName: docSnap.data()?.displayName,
-               userImage: docSnap.data()?.userImage,
-            }
-            setUserCardObj(userData)
-        }
-        getUserInfo()
-    },[authorId])
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const docRef = doc(dbService, "users", `${authorId}`);
+      const docSnap = await getDoc(docRef);
+      const userData = {
+        displayName: docSnap.data()?.displayName,
+        userImage: docSnap.data()?.userImage,
+      };
+      setUserCardObj(userData);
+    };
+    getUserInfo();
+  }, [authorId]);
 
-    return (
-            <Link to={`/${authorId}`}>
-        <div className="user_card">
-            {userCardObj && (
-                <>
-                <img className="user_card_img" src={userCardObj.userImage} alt='user' />
-                <h4>{userCardObj.displayName}</h4>
-                </>
-                )}
-        </div>
-                </Link>
-    )
-}
+  return (
+    <Link to={`/${authorId}`}>
+      <Wrapper>
+        {userCardObj && (
+          <>
+            <UserImg src={userCardObj.userImage} alt="user" />
+            <h4>{userCardObj.displayName}</h4>
+          </>
+        )}
+      </Wrapper>
+    </Link>
+  );
+};
 
-export default UserCard
+export default UserCard;

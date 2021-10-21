@@ -5,7 +5,6 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
-import "./App.css";
 import { userObjState } from "./App";
 
 interface AppRouterProps {

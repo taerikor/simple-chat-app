@@ -3,7 +3,7 @@ import { authService, dbService } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import AppRouter from "./AppRouter";
 import { doc, onSnapshot } from "@firebase/firestore";
-
+import { createGlobalStyle } from "styled-components";
 export interface userObjState {
   displayName: string;
   userImage: string;
@@ -11,6 +11,18 @@ export interface userObjState {
   userId: string;
   userInterface?: User;
 }
+
+const GlobalStyle = createGlobalStyle`
+.fa-home {
+  font-size: 2rem;
+  color: white;
+  opacity: 0.8;
+}
+body {
+  margin: 0;
+  background-color: navajowhite;
+}
+`;
 
 const App: React.FunctionComponent = () => {
   const [init, setInit] = useState(false);
@@ -43,22 +55,10 @@ const App: React.FunctionComponent = () => {
       };
       setUserObj(userData);
     });
-    // const docSnap = await getDoc(docRef);
-
-    // const userQuery = query(collection(dbService, "users"),where("userId","==",data.uid))
-    // onSnapshot(userQuery,(snapshot)=>{
-    //   let currentUserObj:userObjState[] = snapshot.docs.map((doc)=> ({
-    //     displayName: doc.data().displayName,
-    //     userImage: doc.data().userImage,
-    //     userDesc: doc.data().userDesc,
-    //     userId: doc.data().userId
-    //   }))
-    //   currentUserObj[0].userInterface = data;
-    //   setUserObj(currentUserObj[0])
-    // })
   };
   return (
     <>
+      <GlobalStyle />
       {init ? (
         <AppRouter userObj={userObj} isLoggedIn={isLoggedIn} />
       ) : (

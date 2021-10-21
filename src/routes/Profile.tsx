@@ -15,7 +15,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import { ChatsState } from "./Home";
 import Chat from "../components/Chat";
 
-import "./Profile.css";
+import styled from "styled-components";
 
 export interface PathParamsProps {
   userId: string;
@@ -29,6 +29,17 @@ export interface userInfoObjState {
   userImage: string;
   userDesc: string;
 }
+
+const UserImg = styled.img`
+  height: 200px;
+  width: 200px;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Profile: React.FunctionComponent<
   ProfileProps & RouteComponentProps<PathParamsProps>
@@ -86,16 +97,16 @@ const Profile: React.FunctionComponent<
   };
 
   return (
-    <div className="profile-layout">
+    <div>
       {userInfoObj && (
-        <div className="profile-userinfo">
-          <img src={userInfoObj.userImage} alt="profile" />
+        <ContentWrapper>
+          <UserImg src={userInfoObj.userImage} alt="profile" />
           <h2>{userInfoObj.displayName}</h2>
           <div className="profile-userinfo-desc">
             <h4>Description</h4>
             <span>{userInfoObj.userDesc}</span>
           </div>
-        </div>
+        </ContentWrapper>
       )}
       {userId === userObj.userId && (
         <>
@@ -115,7 +126,9 @@ const Profile: React.FunctionComponent<
           isMyChat ? "Close" : "Open"
         } my chats`}</button>
         {isMyChat &&
-          myChats?.map((chat) => <Chat key={chat.id} chatObj={chat} />)}
+          myChats?.map((chat) => (
+            <Chat key={chat.id} chatObj={chat} isOwner={true} />
+          ))}
       </div>
     </div>
   );

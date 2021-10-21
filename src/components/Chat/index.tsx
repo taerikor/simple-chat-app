@@ -1,21 +1,36 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { ChatsState } from "../../routes/Home";
 import { doc, deleteDoc } from "@firebase/firestore";
 import { dbService, storageService } from "../../firebase";
 import { deleteObject, ref } from "firebase/storage";
 
-import "./chat.css";
 import timeForToday from "../../utils/Date";
 import UserCard from "../UserCard";
+import styled from "styled-components";
 
+const Wrapper = styled.div<{ isOwner: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.isOwner ? "row-reverse" : "row")};
+  margin-bottom: 20px;
+`;
+const ChatBox = styled.div<{ isOwner: boolean }>`
+  background-color: ${(props) => (props.isOwner ? "green" : "yellow")};
+  max-width: 80%;
+  padding: 0px 20px;
+  margin: 5px 10px;
+  border-radius: 5px;
+`;
+
+const Image = styled.img`
+  height: 80px;
+  width: 80px;
+`;
 interface ChatProps {
   chatObj: ChatsState;
-  isOwner?: boolean;
+  isOwner: boolean;
 }
 
 const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
-  const chatDiv = useRef<HTMLDivElement>(null);
-
   const onDeleteClick = async () => {
     const confirm = window.confirm("you really delete this?");
     if (confirm) {
@@ -26,34 +41,18 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
     }
   };
 
-  useEffect(() => {
-    const OWNER_CN = "ownerChat";
-    const OTHER_CN = "otherChat";
-    if (chatDiv && chatDiv.current) {
-      if (isOwner === true) {
-        chatDiv.current.className = OWNER_CN;
-      } else {
-        chatDiv.current.className = OTHER_CN;
-      }
-    }
-  }, [isOwner]);
-
   return (
-    <div className="chat_container">
-      <div ref={chatDiv}>
-        {chatObj.imageUrl && (
-          <img src={chatObj.imageUrl} height="80px" width="80px" alt="post" />
-        )}
-        <UserCard authorId={chatObj.authorId} />
-        <div className="chatBox">
-          <h3>{chatObj.text}</h3>
-        </div>
-        <div>
-          <p>{timeForToday(chatObj.createAt)}</p>
-          {isOwner && <button onClick={onDeleteClick}>Delete</button>}
-        </div>
+    <Wrapper isOwner={isOwner}>
+      {chatObj.imageUrl && <Image src={chatObj.imageUrl} alt="post" />}
+      <UserCard authorId={chatObj.authorId} />
+      <ChatBox isOwner={isOwner}>
+        <h3>{chatObj.text}</h3>
+      </ChatBox>
+      <div>
+        <p>{timeForToday(chatObj.createAt)}</p>
+        {isOwner && <button onClick={onDeleteClick}>Delete</button>}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
