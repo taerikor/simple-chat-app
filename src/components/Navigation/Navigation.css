@@ -1,12 +1,10 @@
 nav {
   display: flex;
-  justify-content: right;
-  align-items: center;
-  height: 50px;
-  width: 100%;
+  align-items: flex-end;
+  flex-direction: column;
   position: fixed;
+  right: 0;
   top: 0;
-  background-color: black;
 }
 
 nav a {
@@ -14,5 +12,15 @@ nav a {
   cursor: pointer;
   color: white;
   font-size: 20px;
-  padding-right: 20px;
+}
+
+nav img {
+  border-radius: 50%;
+  border: #666 1px solid;
+  height: 40px;
+  width: 40px;
+}
+.logout {
+  border: 1px solid #6666;
+  padding: 10px 20px;
 }
