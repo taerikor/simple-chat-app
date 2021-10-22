@@ -22,6 +22,11 @@ body {
   margin: 0;
   background-color: navajowhite;
 }
+
+html, body {
+  /* width: 100%;
+  height: 100vh; */
+}
 `;
 
 const App: React.FunctionComponent = () => {
@@ -31,7 +36,6 @@ const App: React.FunctionComponent = () => {
 
   useEffect(() => {
     onAuthStateChanged(authService, (user) => {
-      console.log("is work?");
       if (user) {
         setIsLoggedIn(true);
         getUserDoc(user);

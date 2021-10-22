@@ -69,7 +69,7 @@ const ChatForm: React.FunctionComponent<ChatFormProps> = ({
 
     const imgFile = files[0];
     const reader = new FileReader();
-    reader.onloadend = (event) => {
+    reader.onloadend = () => {
       const result = reader.result as string;
       setReaderUrl(result);
     };

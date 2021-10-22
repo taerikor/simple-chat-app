@@ -9,6 +9,27 @@ import {
 import { authService, dbService } from "../firebase";
 import AuthForm from "../components/AuthForm";
 import { collection, doc, setDoc } from "@firebase/firestore";
+import styled from "styled-components";
+
+const LoginButton = styled.button`
+  background: skyblue;
+  border-radius: 20px;
+  width: 300px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 1rem;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+`;
 
 const Auth: React.FunctionComponent = () => {
   const [newAccount, setNewAccount] = useState(false);
@@ -60,20 +81,20 @@ const Auth: React.FunctionComponent = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <AuthForm newAccount={newAccount} addUserDoc={addUserDoc} />
-      <span onClick={toggleNewAccount}>
+      <LoginButton onClick={toggleNewAccount}>
         {newAccount ? "Sign In" : "Create Account"}
-      </span>
+      </LoginButton>
       <div>
-        <button name="google" onClick={onSocialClick}>
+        <LoginButton name="google" onClick={onSocialClick}>
           Continue with Google
-        </button>
-        <button name="github" onClick={onSocialClick}>
+        </LoginButton>
+        {/* <button name="github" onClick={onSocialClick}>
           Continue with Github
-        </button>
+        </button> */}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
