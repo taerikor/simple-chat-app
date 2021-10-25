@@ -12,14 +12,14 @@ interface AuthFormProps {
   addUserDoc: (data: UserCredential) => Promise<void>;
 }
 const Input = styled.input<{ toggle?: boolean }>`
-  background-color: ${(props) => (props?.toggle ? "skyblue" : "white")};
+  background-color: ${(props) => (props?.toggle ? "#3bf52a" : "white")};
   border-radius: 20px;
   width: 300px;
   height: 40px;
   color: ${(props) => (props?.toggle ? "white" : "black")};
   cursor: ${(props) => (props?.toggle ? "pointer" : "auto")};
-  padding: 0 10px;
-  font-size: 1.1rem;
+  padding-left: 10px;
+  font-size: 1rem;
   margin-bottom: 10px;
 `;
 

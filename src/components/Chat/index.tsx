@@ -14,11 +14,18 @@ const Wrapper = styled.div<{ isOwner: boolean }>`
   margin-bottom: 20px;
 `;
 const ChatBox = styled.div<{ isOwner: boolean }>`
-  background-color: ${(props) => (props.isOwner ? "green" : "yellow")};
+  background-color: ${(props) => (props.isOwner ? "#3bf52a" : "#686a68")};
   max-width: 80%;
   padding: 0px 20px;
   margin: 5px 10px;
-  border-radius: 5px;
+  border-radius: 10px;
+`;
+
+const Delete = styled.span`
+  cursor: pointer;
+  &:hover {
+    border-bottom: 1px solid #ffffff;
+  }
 `;
 
 const Image = styled.img`
@@ -50,7 +57,7 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
       </ChatBox>
       <div>
         <p>{timeForToday(chatObj.createAt)}</p>
-        {isOwner && <button onClick={onDeleteClick}>Delete</button>}
+        {isOwner && <Delete onClick={onDeleteClick}>Delete</Delete>}
       </div>
     </Wrapper>
   );

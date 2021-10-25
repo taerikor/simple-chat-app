@@ -19,7 +19,6 @@ const FormWrapper = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  color: white;
 `;
 const InputWrapper = styled.div`
   background-color: #0000008c;

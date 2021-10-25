@@ -16,6 +16,42 @@ interface ProfileProps {
 const PreviewImg = styled.img`
   max-height: 100px;
   max-width: 100px;
+  background-color: white;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 100px;
+  margin: 30px 0;
+`;
+
+const Input = styled.input<{ isDesc?: boolean }>`
+  background-color: white;
+  border-radius: 20px;
+  width: 100%;
+  height: ${(props) => (props?.isDesc ? "200px" : "40px")};
+  padding-left: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+`;
+const InputButton = styled.label`
+  background-color: green;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+const Button = styled.button`
+  background-color: green;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  color: white;
+  cursor: pointer;
+`;
+const HiddenInput = styled.input`
+  display: none;
 `;
 
 const EditProfile: React.FunctionComponent<ProfileProps> = ({
@@ -78,13 +114,29 @@ const EditProfile: React.FunctionComponent<ProfileProps> = ({
       {readerUrl && (
         <>
           <PreviewImg src={readerUrl} alt="upload" />
-          <button onClick={onClearURLClick}>Clear</button>
+          <Button onClick={onClearURLClick}>Clear</Button>
         </>
       )}
-      <input name="name" type="text" value={newName} onChange={onChange} />
-      <input name="desc" type="text" value={newDesc} onChange={onChange} />
-      <input type="submit" value="Edit" />
-      <input type="file" accept="image/*" onChange={onFileChange} />
+      <InputWrapper>
+        <Input name="name" type="text" value={newName} onChange={onChange} />
+        <Input
+          isDesc={true}
+          name="desc"
+          type="text"
+          value={newDesc}
+          onChange={onChange}
+        />
+        <div>
+          <InputButton>
+            Change Cover
+            <HiddenInput type="file" accept="image/*" onChange={onFileChange} />
+          </InputButton>
+          <InputButton>
+            Submit
+            <HiddenInput type="submit" value="Edit" />
+          </InputButton>
+        </div>
+      </InputWrapper>
     </form>
   );
 };

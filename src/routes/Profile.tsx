@@ -41,6 +41,16 @@ const ContentWrapper = styled.div`
   align-items: center;
 `;
 
+const Button = styled.button`
+  background-color: green;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 10px;
+  color: white;
+  cursor: pointer;
+  border: none;
+`;
+
 const Profile: React.FunctionComponent<
   ProfileProps & RouteComponentProps<PathParamsProps>
 > = ({ match, userObj }): JSX.Element => {
@@ -117,14 +127,14 @@ const Profile: React.FunctionComponent<
               rerenderUserInfo={rerenderUserInfo}
             />
           ) : (
-            <button onClick={onToggleEdit}>Edit</button>
+            <Button onClick={onToggleEdit}>Edit</Button>
           )}
         </>
       )}
       <div>
-        <button onClick={onGetMyChats}>{`${
+        <Button onClick={onGetMyChats}>{`${
           isMyChat ? "Close" : "Open"
-        } my chats`}</button>
+        } my chats`}</Button>
         {isMyChat &&
           myChats?.map((chat) => (
             <Chat key={chat.id} chatObj={chat} isOwner={true} />

@@ -12,7 +12,7 @@ import { collection, doc, setDoc } from "@firebase/firestore";
 import styled from "styled-components";
 
 const LoginButton = styled.button`
-  background: skyblue;
+  background: #686a68;
   border-radius: 20px;
   width: 300px;
   height: 40px;
