@@ -9,7 +9,6 @@ import styled from "styled-components";
 
 const NavWrapper = styled.nav`
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
   position: fixed;
   right: 0;
@@ -19,14 +18,18 @@ const NavWrapper = styled.nav`
 const UserImg = styled.img`
   border-radius: 50%;
   border: #666 1px solid;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
+  margin: 10px 10px;
 `;
 
 const Logout = styled.div`
   border: 1px solid #6666;
-  padding: 10px 20px;
+  background-color: #6666;
+  border-radius: 5px;
+  padding: 5px 5px;
   transition: ease 0.5;
+  text-align: center;
   cursor: pointer;
   &:hover {
   }
@@ -34,7 +37,7 @@ const Logout = styled.div`
 
 const HoverText = styled.span`
   ${Logout}:hover & {
-    border-bottom: 1px solid #6666;
+    border-bottom: 1px solid #ffffff;
   }
 `;
 
@@ -74,7 +77,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({
           {isMouseOver && (
             <>
               <Logout onClick={onSignOutClick}>
-                <HoverText>Log Out</HoverText>
+                <HoverText>Logout</HoverText>
               </Logout>
             </>
           )}

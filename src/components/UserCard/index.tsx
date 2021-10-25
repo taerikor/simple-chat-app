@@ -10,10 +10,11 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: aliceblue;
   border-radius: 5px;
-  border: beige 1px solid;
+  border: black 2px solid;
   padding: 0 5px;
   height: 35px;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  color: black;
 `;
 
 const UserImg = styled.img`
@@ -21,6 +22,7 @@ const UserImg = styled.img`
   height: 30px;
   width: 30px;
   margin-right: 5px;
+  border: black 1px solid;
 `;
 
 interface UserCardProps {

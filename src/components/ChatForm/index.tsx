@@ -3,6 +3,11 @@ import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowAltCircleDown,
+  faArrowUp,
+} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 interface ChatFormProps {
@@ -10,25 +15,40 @@ interface ChatFormProps {
 }
 const FormWrapper = styled.div`
   display: block;
-  color: aliceblue;
   height: auto;
   position: fixed;
   bottom: 0;
   width: 100%;
+  color: white;
 `;
 const InputWrapper = styled.div`
-  background-color: black;
+  background-color: #0000008c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
 `;
 const ChatInput = styled.input`
-  width: 100%;
   min-height: 30px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  border-radius: 30px;
+  padding-left: 10px;
+  width: 80%;
 `;
 const PreviewImg = styled.img`
   max-width: 200px;
   max-height: 200px;
+`;
+
+const InputButton = styled.label`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+`;
+const HiddenInput = styled.input`
+  display: none;
 `;
 
 const ChatForm: React.FunctionComponent<ChatFormProps> = ({
@@ -92,8 +112,14 @@ const ChatForm: React.FunctionComponent<ChatFormProps> = ({
             type="textarea"
             placeholder="Type Chat"
           />
-          <input type="submit" value="Chat!" />
-          <input type="file" accept="image/*" onChange={onFileChange} />
+          <InputButton>
+            <FontAwesomeIcon icon={faArrowUp} />
+            <HiddenInput id="input-submit" type="submit" />
+          </InputButton>
+          <InputButton>
+            <FontAwesomeIcon icon={faArrowAltCircleDown} />
+            <HiddenInput type="file" accept="image/*" onChange={onFileChange} />
+          </InputButton>
         </InputWrapper>
       </FormWrapper>
     </form>
