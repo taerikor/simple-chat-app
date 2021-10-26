@@ -12,7 +12,7 @@ interface AuthFormProps {
   addUserDoc: (data: UserCredential) => Promise<void>;
 }
 const Input = styled.input<{ toggle?: boolean }>`
-  background-color: ${(props) => (props?.toggle ? "#3bf52a" : "white")};
+  background-color: ${(props) => (props?.toggle ? "mediumseagreen" : "white")};
   border-radius: 20px;
   width: 300px;
   height: 40px;

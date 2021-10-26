@@ -5,7 +5,8 @@ import { dbService, storageService } from "../../firebase";
 import { userInfoObjState } from "../../routes/Profile";
 import { v4 as uuidv4 } from "uuid";
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
-import styled from "styled-components";
+import styled, { css, ThemeProvider } from "styled-components";
+import { Button, Theme, Title } from "../../utils/style";
 
 interface ProfileProps {
   userObj: userObjState;
@@ -22,36 +23,37 @@ const PreviewImg = styled.img`
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 100px;
-  margin: 30px 0;
+  /* padding: 0 100px; */
+  /* margin: 30px 0; */
+`;
+const Input = css`
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px 10px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+`;
+const Name = styled.input`
+  ${Input}
 `;
 
-const Input = styled.input<{ isDesc?: boolean }>`
-  background-color: white;
-  border-radius: 20px;
-  width: 100%;
-  height: ${(props) => (props?.isDesc ? "200px" : "40px")};
-  padding-left: 10px;
-  font-size: 1rem;
-  margin-bottom: 20px;
+const Desc = styled.textarea`
+  ${Input}
+  min-height: 100px;
 `;
-const InputButton = styled.label`
-  background-color: green;
-  border-radius: 30px;
-  padding: 10px 20px;
-  margin-right: 10px;
-  cursor: pointer;
+const ButtonWrapper = styled.div`
+  display: flex;
 `;
-const Button = styled.button`
-  background-color: green;
-  border-radius: 30px;
-  padding: 10px 20px;
-  margin-left: 10px;
-  color: white;
-  cursor: pointer;
-`;
+
 const HiddenInput = styled.input`
   display: none;
+`;
+
+const Form = styled.form`
+  width: 80%;
+`;
+const EditButton = styled(Button)`
+  margin-right: 5px;
 `;
 
 const EditProfile: React.FunctionComponent<ProfileProps> = ({
@@ -85,14 +87,13 @@ const EditProfile: React.FunctionComponent<ProfileProps> = ({
     onToggleEdit();
   };
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const name = event.target.name;
-    if (name === "name") {
-      setNewName(value);
-    } else if (name === "desc") {
-      setNewDesc(value);
-    }
+    setNewName(value);
+  };
+  const onDescChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    setNewDesc(value);
   };
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -110,7 +111,7 @@ const EditProfile: React.FunctionComponent<ProfileProps> = ({
   };
   const onClearURLClick = () => setReaderUrl("");
   return (
-    <form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       {readerUrl && (
         <>
           <PreviewImg src={readerUrl} alt="upload" />
@@ -118,26 +119,24 @@ const EditProfile: React.FunctionComponent<ProfileProps> = ({
         </>
       )}
       <InputWrapper>
-        <Input name="name" type="text" value={newName} onChange={onChange} />
-        <Input
-          isDesc={true}
-          name="desc"
-          type="text"
-          value={newDesc}
-          onChange={onChange}
-        />
-        <div>
-          <InputButton>
+        <Title>Edit Profile</Title>
+        <Name type="text" value={newName} onChange={onNameChange} />
+        <Desc value={newDesc} onChange={onDescChange} />
+        <ButtonWrapper>
+          <ThemeProvider theme={Theme}>
+            <EditButton onClick={() => onToggleEdit()}>Cancle</EditButton>
+          </ThemeProvider>
+          <EditButton>
             Change Cover
             <HiddenInput type="file" accept="image/*" onChange={onFileChange} />
-          </InputButton>
-          <InputButton>
+          </EditButton>
+          <EditButton>
             Submit
             <HiddenInput type="submit" value="Edit" />
-          </InputButton>
-        </div>
+          </EditButton>
+        </ButtonWrapper>
       </InputWrapper>
-    </form>
+    </Form>
   );
 };
 

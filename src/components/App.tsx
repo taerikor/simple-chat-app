@@ -25,12 +25,14 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
 }
-
-
-
 html, body {
-  /* width: 100%;
-  height: 100vh; */
+  width: 100%;
+  height: 100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+  padding:0;
+  margin:0;
 }
 `;
 

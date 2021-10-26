@@ -16,6 +16,7 @@ import { ChatsState } from "./Home";
 import Chat from "../components/Chat";
 
 import styled from "styled-components";
+import { Button, Title } from "../utils/style";
 
 export interface PathParamsProps {
   userId: string;
@@ -31,24 +32,37 @@ export interface userInfoObjState {
 }
 
 const UserImg = styled.img`
-  height: 200px;
-  width: 200px;
+  max-height: 400px;
+  max-width: 400px;
+  background-color: white;
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
+`;
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+`;
+const DescWrapper = styled.div`
+  min-width: 300px;
+  padding: 0 20px;
+  min-height: 30%;
+  border: 3px solid #666;
+  border-radius: 10px;
+  margin: 20px 0;
+`;
+const DescHeader = styled.h3`
+  padding: 5px 0;
+  margin-bottom: 10px;
+  color: #666;
 `;
 
-const Button = styled.button`
-  background-color: green;
-  border-radius: 30px;
-  padding: 10px 20px;
-  margin: 10px;
-  color: white;
-  cursor: pointer;
-  border: none;
+const Toggle = styled(Button)`
+  margin-right: 10px;
 `;
 
 const Profile: React.FunctionComponent<
@@ -107,40 +121,42 @@ const Profile: React.FunctionComponent<
   };
 
   return (
-    <div>
-      {userInfoObj && (
-        <ContentWrapper>
-          <UserImg src={userInfoObj.userImage} alt="profile" />
-          <h2>{userInfoObj.displayName}</h2>
-          <div className="profile-userinfo-desc">
-            <h4>Description</h4>
-            <span>{userInfoObj.userDesc}</span>
-          </div>
-        </ContentWrapper>
-      )}
-      {userId === userObj.userId && (
+    <Wrapper>
+      {isEdit ? (
+        <EditProfile
+          userObj={userObj}
+          onToggleEdit={onToggleEdit}
+          rerenderUserInfo={rerenderUserInfo}
+        />
+      ) : (
         <>
-          {isEdit ? (
-            <EditProfile
-              userObj={userObj}
-              onToggleEdit={onToggleEdit}
-              rerenderUserInfo={rerenderUserInfo}
-            />
-          ) : (
-            <Button onClick={onToggleEdit}>Edit</Button>
+          {userInfoObj && (
+            <>
+              <Title>{`" ${userInfoObj.displayName} "`}</Title>
+              <UserImg src={userInfoObj.userImage} alt="profile" />
+              <DescWrapper>
+                <DescHeader>Description</DescHeader>
+                <span>{userInfoObj.userDesc}</span>
+              </DescWrapper>
+            </>
           )}
+          <ContentWrapper>
+            <Toggle onClick={onGetMyChats}>{`${
+              isMyChat ? "Close" : "Open"
+            } my chats`}</Toggle>
+            {userId === userObj.userId && (
+              <Toggle onClick={onToggleEdit}>Edit</Toggle>
+            )}
+          </ContentWrapper>
         </>
       )}
       <div>
-        <Button onClick={onGetMyChats}>{`${
-          isMyChat ? "Close" : "Open"
-        } my chats`}</Button>
         {isMyChat &&
           myChats?.map((chat) => (
             <Chat key={chat.id} chatObj={chat} isOwner={true} />
           ))}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
