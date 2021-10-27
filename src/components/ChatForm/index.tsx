@@ -27,11 +27,12 @@ const InputWrapper = styled.div`
   align-items: center;
   padding: 10px;
 `;
-const ChatInput = styled.input`
+const ChatInput = styled.textarea`
   min-height: 30px;
-  border-radius: 30px;
+  border-radius: 10px;
   padding-left: 10px;
   width: 80%;
+  font-size: 1rem;
 `;
 const PreviewImg = styled.img`
   max-width: 200px;
@@ -56,7 +57,7 @@ const ChatForm: React.FunctionComponent<ChatFormProps> = ({
   const [chat, setChat] = useState("");
   const [readerUrl, setReaderUrl] = useState("");
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
     setChat(value);
   };
@@ -105,12 +106,7 @@ const ChatForm: React.FunctionComponent<ChatFormProps> = ({
           </>
         )}
         <InputWrapper>
-          <ChatInput
-            value={chat}
-            onChange={onChange}
-            type="textarea"
-            placeholder="Type Chat"
-          />
+          <ChatInput value={chat} onChange={onChange} placeholder="Type Chat" />
           <InputButton>
             <FontAwesomeIcon icon={faArrowUp} />
             <HiddenInput id="input-submit" type="submit" />

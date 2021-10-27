@@ -14,14 +14,20 @@ export interface userObjState {
 
 const GlobalStyle = createGlobalStyle`
 .fa-home {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
+  opacity: 0.9;
+  margin: 15px 15px;
+}
+svg {
   color: white;
-  opacity: 0.8;
-  padding: 10px 10px;
+  &:hover {
+    color: #a29898;
+  }
+
 }
 body {
   margin: 0;
-  background-color: #121212;
+  background-color: #222831;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
 }

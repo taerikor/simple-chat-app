@@ -12,20 +12,40 @@ const Wrapper = styled.div<{ isOwner: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isOwner ? "row-reverse" : "row")};
   margin-bottom: 20px;
+  margin-top: 6px;
 `;
 const ChatBox = styled.div<{ isOwner: boolean }>`
-  background-color: ${(props) => (props.isOwner ? "#3bf52a" : "#686a68")};
+  background-color: ${(props) =>
+    props.isOwner ? "mediumseagreen" : "#686a68"};
   max-width: 80%;
-  padding: 0px 20px;
-  margin: 5px 10px;
+  padding: 10px 10px;
+  margin: 5px 0;
   border-radius: 10px;
 `;
 
 const Delete = styled.span`
+  padding: 0;
+  font-size: 12px;
   cursor: pointer;
   &:hover {
     border-bottom: 1px solid #ffffff;
   }
+`;
+const SideWrapper = styled.div`
+  margin: 8px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Date = styled.span`
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 3px;
+`;
+
+const CardWrapper = styled.div<{ isOwner: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.isOwner ? "row-reverse" : "row")};
 `;
 
 const Image = styled.img`
@@ -38,6 +58,7 @@ interface ChatProps {
 }
 
 const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
+  console.log(isOwner);
   const onDeleteClick = async () => {
     const confirm = window.confirm("you really delete this?");
     if (confirm) {
@@ -49,17 +70,21 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
   };
 
   return (
-    <Wrapper isOwner={isOwner}>
-      {chatObj.imageUrl && <Image src={chatObj.imageUrl} alt="post" />}
-      <UserCard authorId={chatObj.authorId} />
-      <ChatBox isOwner={isOwner}>
-        <h3>{chatObj.text}</h3>
-      </ChatBox>
-      <div>
-        <p>{timeForToday(chatObj.createAt)}</p>
-        {isOwner && <Delete onClick={onDeleteClick}>Delete</Delete>}
-      </div>
-    </Wrapper>
+    <>
+      <CardWrapper isOwner={isOwner}>
+        <UserCard authorId={chatObj.authorId} />
+      </CardWrapper>
+      <Wrapper isOwner={isOwner}>
+        {chatObj.imageUrl && <Image src={chatObj.imageUrl} alt="post" />}
+        <ChatBox isOwner={isOwner}>
+          <h3>{chatObj.text}</h3>
+        </ChatBox>
+        <SideWrapper>
+          <Date>{timeForToday(chatObj.createAt)}</Date>
+          {isOwner && <Delete onClick={onDeleteClick}>Delete</Delete>}
+        </SideWrapper>
+      </Wrapper>
+    </>
   );
 };
 

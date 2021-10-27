@@ -31,6 +31,14 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
+const Title = styled.h1`
+  margin-bottom: 60px;
+  font-size: 70px;
+  letter-spacing: -5px;
+  font-weight: 900;
+  color: mediumseagreen;
+`;
+
 const Auth: React.FunctionComponent = () => {
   const [newAccount, setNewAccount] = useState(false);
 
@@ -81,20 +89,23 @@ const Auth: React.FunctionComponent = () => {
   };
 
   return (
-    <Wrapper>
-      <AuthForm newAccount={newAccount} addUserDoc={addUserDoc} />
-      <LoginButton onClick={toggleNewAccount}>
-        {newAccount ? "Sign In" : "Create Account"}
-      </LoginButton>
-      <div>
-        <LoginButton name="google" onClick={onSocialClick}>
-          Continue with Google
+    <>
+      <Wrapper>
+        <Title>SIMPLE CHAT</Title>
+        <AuthForm newAccount={newAccount} addUserDoc={addUserDoc} />
+        <LoginButton onClick={toggleNewAccount}>
+          {newAccount ? "Sign In" : "Create Account"}
         </LoginButton>
-        {/* <button name="github" onClick={onSocialClick}>
+        <div>
+          <LoginButton name="google" onClick={onSocialClick}>
+            Continue with Google
+          </LoginButton>
+          {/* <button name="github" onClick={onSocialClick}>
           Continue with Github
         </button> */}
-      </div>
-    </Wrapper>
+        </div>
+      </Wrapper>
+    </>
   );
 };
 

@@ -6,10 +6,12 @@ import { signOut } from "@firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { Button } from "../../utils/style";
 
 const NavWrapper = styled.nav`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   position: fixed;
   right: 0;
   top: 0;
@@ -23,22 +25,8 @@ const UserImg = styled.img`
   margin: 10px 10px;
 `;
 
-const Logout = styled.div`
-  border: 1px solid #6666;
-  background-color: #6666;
-  border-radius: 5px;
-  padding: 5px 5px;
-  transition: ease 0.5;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-  }
-`;
-
-const HoverText = styled.span`
-  ${Logout}:hover & {
-    border-bottom: 1px solid #ffffff;
-  }
+const Logout = styled(Button)`
+  padding: 5px 10px;
 `;
 
 interface NavigationProps {
@@ -76,9 +64,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({
           </Link>
           {isMouseOver && (
             <>
-              <Logout onClick={onSignOutClick}>
-                <HoverText>Logout</HoverText>
-              </Logout>
+              <Logout onClick={onSignOutClick}>Logout</Logout>
             </>
           )}
         </>

@@ -39,6 +39,9 @@ const UserImg = styled.img`
 
 const ContentWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  align-items: center;
 `;
 const Wrapper = styled.div`
   height: 100vh;
@@ -60,9 +63,16 @@ const DescHeader = styled.h3`
   margin-bottom: 10px;
   color: #666;
 `;
+const Name = styled(Title)``;
 
-const Toggle = styled(Button)`
-  margin-right: 10px;
+const Edit = styled.p`
+  color: mediumseagreen;
+  cursor: pointer;
+  border-bottom: 1px solid mediumseagreen;
+  &:hover {
+    color: #666;
+    border-bottom: 1px solid #666;
+  }
 `;
 
 const Profile: React.FunctionComponent<
@@ -132,7 +142,12 @@ const Profile: React.FunctionComponent<
         <>
           {userInfoObj && (
             <>
-              <Title>{`" ${userInfoObj.displayName} "`}</Title>
+              <ContentWrapper>
+                <Name>{`" ${userInfoObj.displayName} "`}</Name>
+                {userId === userObj.userId && (
+                  <Edit onClick={onToggleEdit}>Edit</Edit>
+                )}
+              </ContentWrapper>
               <UserImg src={userInfoObj.userImage} alt="profile" />
               <DescWrapper>
                 <DescHeader>Description</DescHeader>
@@ -140,20 +155,19 @@ const Profile: React.FunctionComponent<
               </DescWrapper>
             </>
           )}
-          <ContentWrapper>
-            <Toggle onClick={onGetMyChats}>{`${
-              isMyChat ? "Close" : "Open"
-            } my chats`}</Toggle>
-            {userId === userObj.userId && (
-              <Toggle onClick={onToggleEdit}>Edit</Toggle>
-            )}
-          </ContentWrapper>
+          <Button onClick={onGetMyChats}>
+            {isMyChat ? "Close" : "Chat Log"}
+          </Button>
         </>
       )}
       <div>
         {isMyChat &&
           myChats?.map((chat) => (
-            <Chat key={chat.id} chatObj={chat} isOwner={true} />
+            <Chat
+              key={chat.id}
+              chatObj={chat}
+              isOwner={chat.authorId === userObj.userId}
+            />
           ))}
       </div>
     </Wrapper>

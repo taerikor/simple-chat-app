@@ -20,7 +20,7 @@ interface HomeProps {
 
 const Wrapper = styled.div`
   padding: 20px 20px;
-  padding-bottom: 80px;
+  padding-bottom: 50px;
 `;
 
 const Home: React.FunctionComponent<HomeProps> = ({ userObj }) => {

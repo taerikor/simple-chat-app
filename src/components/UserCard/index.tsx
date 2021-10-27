@@ -8,21 +8,25 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aliceblue;
   border-radius: 5px;
-  border: black 2px solid;
+  border: mediumslateblue 2px solid;
   padding: 0 5px;
   height: 35px;
   font-size: 0.8rem;
-  color: black;
+  color: mediumslateblue;
+  &:hover {
+    border: #9b8ded 2px solid;
+    color: #9b8ded;
+  }
 `;
 
 const UserImg = styled.img`
   border-radius: 50%;
   height: 30px;
   width: 30px;
-  margin-right: 5px;
+  margin-right: 8px;
   border: black 1px solid;
+  background-color: black;
 `;
 
 interface UserCardProps {
