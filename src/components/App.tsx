@@ -3,7 +3,7 @@ import { authService, dbService } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import AppRouter from "./AppRouter";
 import { doc, onSnapshot } from "@firebase/firestore";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 export interface userObjState {
   displayName: string;
   userImage: string;
@@ -11,7 +11,14 @@ export interface userObjState {
   userId: string;
   userInterface?: User;
 }
-
+const Loading = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 800;
+`;
 const GlobalStyle = createGlobalStyle`
 .fa-home {
   font-size: 1.8rem;
@@ -79,7 +86,7 @@ const App: React.FunctionComponent = () => {
       {init ? (
         <AppRouter userObj={userObj} isLoggedIn={isLoggedIn} />
       ) : (
-        "loading..."
+        <Loading>Loading...</Loading>
       )}
     </>
   );

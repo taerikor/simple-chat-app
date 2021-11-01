@@ -58,7 +58,6 @@ interface ChatProps {
 }
 
 const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
-  console.log(isOwner);
   const onDeleteClick = async () => {
     const confirm = window.confirm("you really delete this?");
     if (confirm) {

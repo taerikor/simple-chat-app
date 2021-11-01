@@ -9,11 +9,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  border: mediumslateblue 2px solid;
+  border: #e8e2e2 2px solid;
   padding: 0 5px;
   height: 35px;
   font-size: 0.8rem;
-  color: mediumslateblue;
+  color: #ffffff;
   &:hover {
     border: #9b8ded 2px solid;
     color: #9b8ded;

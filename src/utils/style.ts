@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Button = styled.div`
+export const Button = styled.label`
   border-radius: 30px;
   padding: 10px 20px;
   color: ${props => props.theme.main};
