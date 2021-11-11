@@ -35,12 +35,13 @@ const UserImg = styled.img`
   max-height: 400px;
   max-width: 400px;
   background-color: white;
+  margin-bottom: 30px;
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 10px;
   align-items: center;
 `;
 const Wrapper = styled.div`
@@ -48,7 +49,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 `;
 const DescWrapper = styled.div`
   min-width: 300px;
@@ -56,7 +57,7 @@ const DescWrapper = styled.div`
   min-height: 30%;
   border: 3px solid #666;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 30px 0;
 `;
 const DescHeader = styled.h3`
   padding: 5px 0;
@@ -142,13 +143,13 @@ const Profile: React.FunctionComponent<
         <>
           {userInfoObj && (
             <>
+              <UserImg src={userInfoObj.userImage} alt="profile" />
               <ContentWrapper>
                 <Name>{`" ${userInfoObj.displayName} "`}</Name>
                 {userId === userObj.userId && (
                   <Edit onClick={onToggleEdit}>Edit</Edit>
                 )}
               </ContentWrapper>
-              <UserImg src={userInfoObj.userImage} alt="profile" />
               <DescWrapper>
                 <DescHeader>Description</DescHeader>
                 <span>{userInfoObj.userDesc}</span>

@@ -23,8 +23,6 @@ const PreviewImg = styled.img`
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* padding: 0 100px; */
-  /* margin: 30px 0; */
 `;
 const Input = css`
   background-color: white;

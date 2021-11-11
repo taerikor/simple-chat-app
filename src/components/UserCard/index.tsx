@@ -20,6 +20,10 @@ const Wrapper = styled.div`
   }
 `;
 
+const BoxLink = styled(Link)`
+  text-decoration: none;
+`;
+
 const UserImg = styled.img`
   border-radius: 50%;
   height: 30px;
@@ -53,7 +57,7 @@ const UserCard: React.FunctionComponent<UserCardProps> = ({ authorId }) => {
   }, [authorId]);
 
   return (
-    <Link to={`/${authorId}`}>
+    <BoxLink to={`/${authorId}`}>
       <Wrapper>
         {userCardObj && (
           <>
@@ -62,7 +66,7 @@ const UserCard: React.FunctionComponent<UserCardProps> = ({ authorId }) => {
           </>
         )}
       </Wrapper>
-    </Link>
+    </BoxLink>
   );
 };
 

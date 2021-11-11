@@ -52,6 +52,11 @@ const Image = styled.img`
   height: 80px;
   width: 80px;
 `;
+
+const Text = styled.p`
+  margin: 0;
+  padding: 0;
+`;
 interface ChatProps {
   chatObj: ChatsState;
   isOwner: boolean;
@@ -76,7 +81,7 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatObj, isOwner }) => {
       <Wrapper isOwner={isOwner}>
         {chatObj.imageUrl && <Image src={chatObj.imageUrl} alt="post" />}
         <ChatBox isOwner={isOwner}>
-          <h3>{chatObj.text}</h3>
+          <Text>{chatObj.text}</Text>
         </ChatBox>
         <SideWrapper>
           <Date>{timeForToday(chatObj.createAt)}</Date>

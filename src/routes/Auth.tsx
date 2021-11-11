@@ -10,6 +10,7 @@ import { authService, dbService } from "../firebase";
 import AuthForm from "../components/AuthForm";
 import { collection, doc, setDoc } from "@firebase/firestore";
 import styled from "styled-components";
+import CryptoJS from "crypto-js";
 
 const LoginButton = styled.button`
   background: #686a68;
@@ -65,9 +66,11 @@ const Auth: React.FunctionComponent = () => {
     const userInfo = getAdditionalUserInfo(data);
     if (userInfo) {
       if (userInfo.providerId === emailAndPasswordUserProviderId) {
+        let str = data.user.uid.trim().toLowerCase();
+        let hash = CryptoJS.MD5(str).toString();
         userObj = {
           displayName: "User",
-          userImage: "https://freesvg.org/img/abstract-user-flat-1.png",
+          userImage: `http://gravatar.com/avatar/${hash}?d=identicon`,
           userId: data.user.uid,
           userDesc: "Empty",
         };
