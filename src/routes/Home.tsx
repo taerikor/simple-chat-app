@@ -19,7 +19,7 @@ interface HomeProps {
 }
 
 const Wrapper = styled.div`
-  padding: 20px 20px;
+  padding: 20px 5%;
   padding-bottom: 50px;
 `;
 
