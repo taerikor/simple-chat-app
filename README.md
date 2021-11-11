@@ -1,9 +1,3 @@
-# taewitter
+# Simple Chat App
 
-Nomad Coders Twitter clone
-
-used React and Firebase
-
-You can watch the [course](https://nomadcoders.co/nwitter) for this app.
-
-by [Nicolás Serrano Arévalo](https://github.com/serranoarevalo)
+real-time chat application with React js, Firebase.
