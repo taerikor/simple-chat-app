@@ -48,6 +48,7 @@ export const DirectionWrapper = styled.div<{ isOwner: boolean }>`
 export const Image = styled.img`
   max-height: 400px;
   max-width: 400px;
+  margin-top: 10px;
 `;
 
 export const Text = styled.p`
