@@ -1,9 +1,8 @@
 # Simple Chat App
 
 real-time chat application with React, [Firebase](https://firebase.google.com/firebase)
+_Main(Chat) page_
 ![chat](./src/img/chat.png)
-![login](./src/img/login.png)
-![profile](./src/img/profile.png)
 
 ## Feature
 
@@ -16,7 +15,7 @@ real-time chat application with React, [Firebase](https://firebase.google.com/fi
 
 1. make `.env` inside **root**
 
-2. put firebase config into `.env`
+2. put **firebase** config into `.env`
 
 ```
     REACT_APP_API_KEY=
@@ -27,6 +26,6 @@ real-time chat application with React, [Firebase](https://firebase.google.com/fi
     REACT_APP_APP_ID=
 ```
 
-3. Type " npm install " inside the root
+3. Type `npm install` inside the **root**
 
 if you want to use Google or Github OAuth 2.0 check [this](https://firebase.google.com/docs/auth)
