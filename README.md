@@ -1,6 +1,7 @@
 # Simple Chat App
 
 real-time chat application with React, [Firebase](https://firebase.google.com/firebase)
+
 _Main(Chat) page_
 ![chat](./src/img/chat.png)
 
